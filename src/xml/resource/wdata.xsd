@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:element name="weather">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="city" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="country" type="xs:string" minOccurs="1"/>
+							<xs:element name="site" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+								<xs:sequence>
+									<xs:element name="url" type="xs:string" maxOccurs="unbounded" minOccurs="1"/>
+									<xs:element name="regex" maxOccurs="unbounded" minOccurs="1">
+										<xs:complexType>
+											<xs:all>
+												<xs:element name="windst" type="xs:string" minOccurs="0"/>
+												<xs:element name="visibility" type="xs:string" minOccurs="0"/>
+												<xs:element name="temp" type="xs:string" minOccurs="0"/>
+												<xs:element name="feeltemp" type="xs:string" minOccurs="0"/>
+												<xs:element name="status" type="xs:string" minOccurs="0"/>
+												<xs:element name="wind" type="xs:string" minOccurs="0"/>
+												<xs:element name="winddir" type="xs:string" minOccurs="0"/>
+												<xs:element name="pressure" type="xs:string" minOccurs="0"/>
+												<xs:element name="humidity" type="xs:string" minOccurs="0"/>
+											</xs:all>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+    
+</xs:schema>
