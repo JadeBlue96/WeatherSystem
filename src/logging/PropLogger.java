@@ -12,7 +12,7 @@ public class PropLogger {
 	public static void initLogger()
 	{
 		try {
-			 fh = new FileHandler("C:\\Users\\User\\eclipse-workspace\\WeatherSystem\\src\\logging\\logs\\prop_val.log", false);
+			 fh = new FileHandler("C:\\Users\\User\\eclipse-workspace\\WeatherSystem\\src\\logging\\logs\\prop_val.log", false); //set path for log file
 			 } catch (SecurityException | IOException e) {
 			 e.printStackTrace();
 			 }

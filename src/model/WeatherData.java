@@ -6,6 +6,7 @@ public class WeatherData {
 	private String status;
 	private Wind wind_data;
 	private Additional additional_data;
+	private ConfigData config_data;
 	
 	public WeatherData() {
 		temp = 0;
@@ -13,12 +14,14 @@ public class WeatherData {
 		status = "";
 		wind_data = new Wind();
 		additional_data = new Additional();
+		setConfig_data(new ConfigData());
 	}
-	public WeatherData(Integer temp, Integer feel_temp, String status, Wind wind_data, Additional additional_data) {
+	public WeatherData(Integer temp, Integer feel_temp, String status, Wind wind_data, Additional additional_data, ConfigData config_data) {
 		this.temp = temp;
 		this.status = status;
 		this.wind_data = wind_data;
 		this.additional_data = additional_data;
+		this.setConfig_data(config_data);
 	}
 	public Wind getWind_data() {
 		return wind_data;
@@ -47,13 +50,19 @@ public class WeatherData {
 	@Override
 	public String toString() {
 		return "WeatherData [temp=" + temp + "°C, feel_temp=" + feel_temp + "°C, status=" + status + ", wind_data=" + wind_data.toString() + ", additional_data="
-				+ additional_data.toString() + "]";
+				+ additional_data.toString() + ", " + config_data.toString() + "]";
 	}
 	public Integer getFeel_temp() {
 		return feel_temp;
 	}
 	public void setFeel_temp(Integer feel_temp) {
 		this.feel_temp = feel_temp;
+	}
+	public ConfigData getConfig_data() {
+		return config_data;
+	}
+	public void setConfig_data(ConfigData config_data) {
+		this.config_data = config_data;
 	}
 	
 

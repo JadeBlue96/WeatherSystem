@@ -1,19 +1,15 @@
 package weather;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import logging.PropLogger;
 import model.Additional;
+import model.ConfigData;
 import model.WeatherData;
 import model.Wind;
 
@@ -26,6 +22,11 @@ public class WeatherDeserializer {
 		WeatherData weather_data = new WeatherData();
 		Wind wind_data = new Wind();
 		Additional add_data = new Additional();
+		ConfigData config_data;
+		
+		String[] file_name_info = file_name.split("_");
+		String[] file_site_info = file_name_info[3].split("\\.");
+		config_data = new ConfigData(file_name_info[1], file_name_info[2], file_site_info[0]);
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(file_name))) {
 		    String line;
@@ -77,6 +78,7 @@ public class WeatherDeserializer {
 		    }
 		    if(add_data != null)	weather_data.setAdditional_data(add_data);
 	    	if(wind_data != null)	weather_data.setWind_data(wind_data);
+	    	if(config_data != null) weather_data.setConfig_data(config_data);
 	    	return weather_data;
 		} catch (FileNotFoundException e) {
 			logger.log(Level.SEVERE, this.getClass().getName().toString() + "Values file not found.");
