@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,11 +13,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import db.DBWeatherRepository;
 import logging.PropLogger;
 import model.Additional;
 import model.WeatherData;
@@ -101,21 +104,24 @@ public class Main {
 		
 		List<CityConfig> cities = new ArrayList<CityConfig>();
 		boolean isXMLValidationType = false;
-		
-		/*
-		CityPropReader city_reader = new CityPropReader();
-		cities = city_reader.buildCityConfig();
-		for(CityConfig city:cities)
-		{
-			System.out.println(city.ToString());
-		}
-		*/
-		
 		cities = getValidCities(isXMLValidationType);
-		
-		
 		WeatherExtractor weather_extractor = new WeatherExtractor();
-		weather_extractor.getDataForCity(cities.get(0));
+		List<WeatherData> weather_list = weather_extractor.getDataForCity(cities.get(0));
+
+		
+		CityPropReader db_credentials = new CityPropReader("resource/db_cred.properties");
+		final String username = db_credentials.getPropertyValue("username");
+		final String password = db_credentials.getPropertyValue("password");
+		final String url = db_credentials.getPropertyValue("url");
+		
+		if(username != null && password != null && url != null)
+		{
+			DBWeatherRepository crud = new DBWeatherRepository(url,username,password);
+			crud.insertWeatherData(weather_list.get(0));
+			crud.close();
+		}
+		
+		
 		
 		
 		/*

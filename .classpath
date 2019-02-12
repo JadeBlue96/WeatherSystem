@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="C:/Users/User/eclipse-workspace/WeatherSystem/libs/httpclient-4.5.7.jar"/>
 	<classpathentry kind="lib" path="C:/Users/User/eclipse-workspace/WeatherSystem/libs/httpcore-4.4.11.jar"/>
 	<classpathentry kind="lib" path="C:/Users/User/eclipse-workspace/WeatherSystem/libs/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/eclipse-workspace/WeatherSystem/libs/postgresql-42.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

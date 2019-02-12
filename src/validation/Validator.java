@@ -20,7 +20,7 @@ public abstract class Validator {
 	public List<CityConfig> initCities()
 	{
 		List<CityConfig> cities = new ArrayList<CityConfig>();
-		prop_reader = new CityPropReader();
+		prop_reader = new CityPropReader("resource/metdata.properties");
 		cities = prop_reader.buildCityConfig();
 		return cities;
 	}

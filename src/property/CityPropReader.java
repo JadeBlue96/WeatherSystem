@@ -29,7 +29,7 @@ public class CityPropReader extends CityConfig {
     CityPropReader all_props;
     
 	
-	public CityPropReader() {
+	public CityPropReader(String file_name) {
 		
 		/*
 		Class clazz = Class.forName(propertyReaderClassName);
@@ -45,7 +45,7 @@ public class CityPropReader extends CityConfig {
 		
         try {
             this.prop = new SequentialProperties();
-            is = this.getClass().getResourceAsStream("resource/metdata.properties");
+            is = this.getClass().getResourceAsStream(file_name);
             if(is != null)
             {
             prop.load(is);
@@ -140,7 +140,7 @@ public class CityPropReader extends CityConfig {
 	
 	public List<CityConfig> buildCityConfig()
 	{
-		all_props = new CityPropReader();
+		all_props = new CityPropReader("resource/metdata.properties");
 		Set<String> enum_values = initTypes();
     	Set<String> sites;
     	HashMap<String, HashMap<WType, String>> weather_map = new HashMap<String, HashMap<WType, String>>();

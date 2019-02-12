@@ -163,7 +163,7 @@ public class WeatherExtractor {
 		}
 	}
 	
-	public void getDataForCity(CityConfig city) {
+	public List<WeatherData> getDataForCity(CityConfig city) {
 		logger.info("Retrieving HTML data...");
 		
 		HashMap<String,String> url_map = city.getUrl_map(); 
@@ -171,6 +171,7 @@ public class WeatherExtractor {
 		HashMap<WType,String> reg_inner_map = new HashMap<WType,String>();
 		WeatherDeserializer weather_deserializer = new WeatherDeserializer();
 		WeatherData weather_data = new WeatherData();
+		List<WeatherData> weather_list = new ArrayList<WeatherData>();
 		
 			try {
 				retrieveUrlData(city);
@@ -182,17 +183,19 @@ public class WeatherExtractor {
 						{
 							weather_data = weather_deserializer.createWeatherData(file);
 							weather_deserializer.printWeatherData(weather_data);
+							weather_list.add(weather_data);
 						}
 					}
 				}
 			}
 			catch (MalformedURLException e) {
 				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");
-				return;
+				return null;
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect HTML format.");
-				return;
+				return null;
 			}
+			return weather_list;
 		}
 		
 
