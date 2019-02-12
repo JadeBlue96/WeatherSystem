@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -161,6 +163,11 @@ public class DBWeatherRepository implements IWeatherRepository{
 	{
 		db.close();
 		logger.info(this.getClass().getName().toString() + ": Connection to database closed.");
+	}
+
+	public List<WeatherData> findAll() {
+		List<WeatherData> result = new ArrayList<WeatherData>();
+        return null;
 	}
 	
 }
