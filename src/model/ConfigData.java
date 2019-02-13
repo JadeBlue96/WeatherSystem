@@ -1,6 +1,8 @@
 package model;
 
 public class ConfigData {
+	
+	private Long id;
 	private String city;
 	private String country;
 	private String site;
@@ -10,6 +12,13 @@ public class ConfigData {
 	}
 	public ConfigData(String city, String country, String site)
 	{
+		this.city = city;
+		this.country = country;
+		this.site = site;
+	}
+	public ConfigData(Long id, String city, String country, String site)
+	{
+		this.id = id;
 		this.city = city;
 		this.country = country;
 		this.site = site;
@@ -35,6 +44,9 @@ public class ConfigData {
 	@Override
 	public String toString() {
 		return "ConfigData [city=" + city + ", country=" + country + ", site=" + site + "]";
+	}
+	public Long getId() {
+		return id;
 	}
 	
 	

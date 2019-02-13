@@ -39,7 +39,10 @@ public class WeatherDeserializer {
 		    	}
 		    	else if(line_values[0].equals(WType.FEELTEMP.toString()))
 		    	{
-		    		weather_data.setFeel_temp(Integer.parseInt(line_values[1]));
+		    		if(!line_values[1].equals("-"))
+		    		{
+		    			weather_data.setFeel_temp(Integer.parseInt(line_values[1]));
+		    		}
 		    	}
 		    	else if(line_values[0].equals(WType.WINDST.toString()))
 		    	{

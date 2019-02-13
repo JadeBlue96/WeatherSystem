@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +36,7 @@ public class WeatherExtractor {
 	
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	
-	private List<String> weather_file_names = new ArrayList<String>();
+	private Set<String> weather_file_names = new HashSet<String>();
 	
 	public void retrieveUrlData(CityConfig city) throws MalformedURLException, IOException
     {
@@ -163,38 +164,50 @@ public class WeatherExtractor {
 		}
 	}
 	
-	public List<WeatherData> getDataForCity(CityConfig city) {
+	public static void printWeatherList(List<WeatherData> weather_list)
+	{
+		for (WeatherData weather: weather_list)
+		{
+			System.out.println(weather.toString() + "\n");
+		}
+	}
+	
+	public List<WeatherData> getDataForCity(List<CityConfig> cities) {
 		logger.info("Retrieving HTML data...");
 		
-		HashMap<String,String> url_map = city.getUrl_map(); 
-		HashMap<String,HashMap<WType,String>> reg_map = city.getSite_map();
-		HashMap<WType,String> reg_inner_map = new HashMap<WType,String>();
-		WeatherDeserializer weather_deserializer = new WeatherDeserializer();
-		WeatherData weather_data = new WeatherData();
 		List<WeatherData> weather_list = new ArrayList<WeatherData>();
 		
-			try {
-				retrieveUrlData(city);
-				for(HashMap.Entry url_entry: url_map.entrySet())
-				{
-					for(String file: weather_file_names)
+		WeatherDeserializer weather_deserializer = new WeatherDeserializer();
+		WeatherData weather_data = new WeatherData();
+		
+		for(CityConfig city: cities)
+		{
+			HashMap<String,String> url_map = city.getUrl_map(); 
+				try {
+					retrieveUrlData(city);
+					for(HashMap.Entry url_entry: url_map.entrySet())
 					{
-						if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()))
+						for(String file: weather_file_names)
 						{
-							weather_data = weather_deserializer.createWeatherData(file);
-							weather_deserializer.printWeatherData(weather_data);
-							weather_list.add(weather_data);
+							if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()))
+							{
+								if(!file.toUpperCase().contains(((String) city.getCityName()).toUpperCase().toString()))
+								{
+									weather_data = weather_deserializer.createWeatherData(file);
+									weather_list.add(weather_data);
+								}
+							}
 						}
 					}
 				}
-			}
-			catch (MalformedURLException e) {
-				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");
-				return null;
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect HTML format.");
-				return null;
-			}
+				catch (MalformedURLException e) {
+					logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");
+					return null;
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect HTML format.");
+					return null;
+				}
+		}
 			return weather_list;
 		}
 		

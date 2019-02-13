@@ -106,8 +106,8 @@ public class Main {
 		boolean isXMLValidationType = false;
 		cities = getValidCities(isXMLValidationType);
 		WeatherExtractor weather_extractor = new WeatherExtractor();
-		List<WeatherData> weather_list = weather_extractor.getDataForCity(cities.get(0));
-
+		List<WeatherData> weather_list = weather_extractor.getDataForCity(cities);
+		WeatherExtractor.printWeatherList(weather_list);
 		
 		CityPropReader db_credentials = new CityPropReader("resource/db_cred.properties");
 		final String username = db_credentials.getPropertyValue("username");
@@ -118,6 +118,8 @@ public class Main {
 		{
 			DBWeatherRepository crud = new DBWeatherRepository(url,username,password);
 			crud.insertWeatherData(weather_list.get(0));
+			List<WeatherData> db_weather_list = crud.DBOToModelObjects();
+			WeatherExtractor.printWeatherList(db_weather_list);
 			crud.close();
 		}
 		

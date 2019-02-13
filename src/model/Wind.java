@@ -1,6 +1,7 @@
 package model;
 
 public class Wind {
+	private Long id;
 	private Double wind_spd;
 	private String wind_status;
 	private String wind_direction;
@@ -10,6 +11,12 @@ public class Wind {
 		wind_status = wind_direction = "";
 	}
 	public Wind(Double wind_spd, String wind_status, String wind_direction) {
+		this.wind_spd = wind_spd;
+		this.wind_status = wind_status;
+		this.wind_direction = wind_direction;
+	}
+	public Wind(Long id,Double wind_spd, String wind_status, String wind_direction) {
+		this.id = id;
 		this.wind_spd = wind_spd;
 		this.wind_status = wind_status;
 		this.wind_direction = wind_direction;
@@ -36,6 +43,9 @@ public class Wind {
 	public String toString() {
 		return "Wind [wind_spd=" + wind_spd + " m/s, wind_status=" + wind_status + ", wind_direction=" + wind_direction
 				+ "]";
+	}
+	public Long getId() {
+		return id;
 	}
 	
 }

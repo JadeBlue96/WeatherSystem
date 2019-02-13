@@ -1,0 +1,7 @@
+WIND:                       2.4
+PRESSURE: 1031
+STATUS: Облачно
+TEMP: 0
+HUMIDITY: 53
+WINDST: лек полъх
+FEELTEMP: -
