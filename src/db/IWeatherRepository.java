@@ -7,6 +7,6 @@ import model.WeatherData;
 public interface IWeatherRepository {
 	
 	public List<WeatherData> DBOToModelObjects();
-	public long insertWeatherData(WeatherData weather_data);
+	public void insertWeatherData(List<WeatherData> weather_list);
 
 }

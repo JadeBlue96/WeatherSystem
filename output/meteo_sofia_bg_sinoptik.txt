@@ -1,7 +1,7 @@
-WIND:                       2.4
-PRESSURE: 1031
-STATUS: Облачно
-TEMP: 0
-HUMIDITY: 53
-WINDST: лек полъх
-FEELTEMP: -
+WIND:                       0.1
+PRESSURE: 1019
+STATUS: Слънчево
+TEMP: 13
+HUMIDITY: 37
+WINDST: безветрие
+FEELTEMP: 1

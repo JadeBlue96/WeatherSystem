@@ -37,6 +37,7 @@ public class WeatherExtractor {
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	
 	private Set<String> weather_file_names = new HashSet<String>();
+	private Set<String> loaded_file_names = new HashSet<String>();
 	
 	public void retrieveUrlData(CityConfig city) throws MalformedURLException, IOException
     {
@@ -189,16 +190,16 @@ public class WeatherExtractor {
 					{
 						for(String file: weather_file_names)
 						{
-							if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()))
+							if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()) && 
+									(!loaded_file_names.contains(file.toString())))
 							{
-								if(!file.toUpperCase().contains(((String) city.getCityName()).toUpperCase().toString()))
-								{
-									weather_data = weather_deserializer.createWeatherData(file);
-									weather_list.add(weather_data);
-								}
+								weather_data = weather_deserializer.createWeatherData(file);
+								weather_list.add(weather_data);
+								loaded_file_names.add(file);
 							}
 						}
 					}
+					
 				}
 				catch (MalformedURLException e) {
 					logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");

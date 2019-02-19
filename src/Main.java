@@ -116,11 +116,15 @@ public class Main {
 		
 		if(username != null && password != null && url != null)
 		{
+			
 			DBWeatherRepository crud = new DBWeatherRepository(url,username,password);
-			crud.insertWeatherData(weather_list.get(0));
+			crud.insertWeatherData(weather_list);
+			weather_list.get(0).setFeel_temp(666);
+			crud.updateWeatherData(weather_list);
 			List<WeatherData> db_weather_list = crud.DBOToModelObjects();
 			WeatherExtractor.printWeatherList(db_weather_list);
 			crud.close();
+			
 		}
 		
 		

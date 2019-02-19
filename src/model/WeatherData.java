@@ -36,6 +36,7 @@ public class WeatherData {
 			Long weather_add_id, Long weather_config_id, Long weather_wind_id) {
 		this.id = id;
 		this.temp = temp;
+		this.feel_temp = feel_temp;
 		this.status = status;
 		this.weather_add_id = weather_add_id;
 		this.weather_config_id = weather_config_id;
@@ -81,6 +82,10 @@ public class WeatherData {
 	}
 	public void setConfig_data(ConfigData config_data) {
 		this.config_data = config_data;
+	}
+	public void setId(Long id)
+	{
+		this.id = id;
 	}
 	public Long getId() {
 		return id;
