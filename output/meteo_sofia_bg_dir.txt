@@ -1,3 +1,0 @@
-WIND: 3
-STATUS: Слънчево
-TEMP: 8

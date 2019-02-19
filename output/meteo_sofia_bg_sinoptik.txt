@@ -1,7 +1,0 @@
-WIND:                       0.1
-PRESSURE: 1019
-STATUS: Слънчево
-TEMP: 13
-HUMIDITY: 37
-WINDST: безветрие
-FEELTEMP: 1
