@@ -1,3 +1,0 @@
-WIND: 2
-STATUS: Облачно
-TEMP: 5

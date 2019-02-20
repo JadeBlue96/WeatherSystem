@@ -1,3 +1,0 @@
-WIND: 4
-STATUS: Облачно
-TEMP: 6
