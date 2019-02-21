@@ -10,11 +10,9 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -41,7 +39,7 @@ public class WeatherExtractor {
 	
 	public void retrieveUrlData(CityConfig city) throws MalformedURLException, IOException
     {
-		for(HashMap.Entry ent: city.getUrl_map().entrySet())
+		for(HashMap.Entry<String,String> ent: city.getUrl_map().entrySet())
 		{
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(ent.getValue().toString());
@@ -69,7 +67,7 @@ public class WeatherExtractor {
 	{
 		Writer writer = new BufferedWriter(new OutputStreamWriter(
 	              new FileOutputStream(file_name), "utf-8"));
-		for (HashMap.Entry ent: values.entrySet()) {
+		for (HashMap.Entry<String,String> ent: values.entrySet()) {
 				writer.write(ent.getKey() + ": " + ent.getValue() + "\n");
 		}
 		writer.close();
@@ -82,9 +80,9 @@ public class WeatherExtractor {
 			while (matcher.find()) {
 				String pattern = matcher.pattern().pattern();
 				String key = "";
-				for (HashMap.Entry ent: reg_map.entrySet()) {
+				for (HashMap.Entry<String, HashMap<WType, String>> ent: reg_map.entrySet()) {
 					HashMap<WType,String> reg_inner_map = (HashMap<WType, String>) ent.getValue();
-					for(HashMap.Entry inner_ent: reg_inner_map.entrySet())
+					for(HashMap.Entry<WType, String> inner_ent: reg_inner_map.entrySet())
 					{
 				        if (Objects.equals(pattern, inner_ent.getValue().toString())) {
 				            key = inner_ent.getKey().toString();
@@ -104,11 +102,11 @@ public class WeatherExtractor {
 		HashMap<String, String> tagValues = new HashMap<String, String>();
 		final List<Matcher> matchers = new ArrayList<Matcher>();
 		
-		for(HashMap.Entry reg_entry:reg_map.entrySet()) {
+		for(HashMap.Entry<String, HashMap<WType, String>> reg_entry:reg_map.entrySet()) {
 			if(reg_entry.getKey().toString().equals(site_name))
 			{
 				HashMap<WType,String> reg_inner_map = (HashMap<WType, String>) reg_entry.getValue();
-				for(HashMap.Entry reg_inner_entry:reg_inner_map.entrySet())
+				for(HashMap.Entry<WType, String> reg_inner_entry:reg_inner_map.entrySet())
 				{
 					String str_entry = reg_inner_entry.getValue().toString();
 					Pattern p_entry = Pattern.compile(str_entry, Pattern.DOTALL);
@@ -186,7 +184,7 @@ public class WeatherExtractor {
 			HashMap<String,String> url_map = city.getUrl_map(); 
 				try {
 					retrieveUrlData(city);
-					for(HashMap.Entry url_entry: url_map.entrySet())
+					for(HashMap.Entry<String, String> url_entry: url_map.entrySet())
 					{
 						for(String file: weather_file_names)
 						{

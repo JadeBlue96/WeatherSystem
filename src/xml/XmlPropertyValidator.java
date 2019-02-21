@@ -16,16 +16,14 @@ import javax.xml.validation.Validator;
 import org.xml.sax.SAXException;
 
 import logging.PropLogger;
-import property.CityConfig;
 import validation.IValidator;
 
 public class XmlPropertyValidator extends validation.Validator implements IValidator{
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	private List<String> errorMessages = new ArrayList<String>();
-	private List<CityConfig> valid_cities = new ArrayList<CityConfig>();
 	
-	public static final String XML_FILE = "src/xml/resource/wdata.xml";
-    public static final String SCHEMA_FILE = "src/xml/resource/wdata.xsd";
+	public static final String XML_FILE = "../resources/xml_configs/wdata.xml";
+    public static final String SCHEMA_FILE = "../resources/xml_configs/wdata.xsd";
     
     public boolean validateXmlSchema(String xmlFile, String schemaFile) {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

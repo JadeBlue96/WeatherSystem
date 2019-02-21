@@ -30,10 +30,10 @@ public class SequentialProperties extends Properties {
     public boolean containsValue(Object value){
         return linkMap.containsValue(value);
     }
-    public Enumeration elements(){
+	public Enumeration<Object> elements(){
         throw new RuntimeException("Method elements is not supported in LinkedProperties class");
     }
-    public Set entrySet(){
+	public Set<java.util.Map.Entry<Object, Object>> entrySet(){
         return linkMap.entrySet();
     }
     public boolean equals(Object o){
@@ -50,11 +50,11 @@ public class SequentialProperties extends Properties {
     public boolean isEmpty(){
         return linkMap.isEmpty();
     }
-    public  Enumeration keys(){
-        Set keys=linkMap.keySet();
+    public  Enumeration<Object> keys(){
+        Set<Object> keys=linkMap.keySet();
         return Collections.enumeration(keys);
     }
-    public Set keySet(){
+    public Set<Object> keySet(){
         return linkMap.keySet();
     }
 
@@ -64,7 +64,7 @@ public class SequentialProperties extends Properties {
     public int size(){
         return linkMap.size();
     }
-    public Collection values(){
+    public Collection<Object> values(){
         return linkMap.values();
     }
 }

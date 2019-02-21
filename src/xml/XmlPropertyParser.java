@@ -36,7 +36,6 @@ public class XmlPropertyParser extends CityConfig {
 	private static final String COUNTRY = "country";
 	private static final String SITE = "site";
 	private static final String URL = "url";
-	private static final String REGEX = "regex";
 	
 	
 	private static final String NAME = "name";
@@ -56,7 +55,7 @@ public class XmlPropertyParser extends CityConfig {
 		try {
 			
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			inputFactory.setProperty(inputFactory.IS_COALESCING, true);
+			inputFactory.setProperty(XMLInputFactory.IS_COALESCING, true);
             InputStream in = new FileInputStream(config_file);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             CityConfig city = null;
@@ -177,15 +176,7 @@ public class XmlPropertyParser extends CityConfig {
 	public static List<CityConfig> readXMLObjects() {
 		List<CityConfig> cities = new ArrayList<CityConfig>();
 		XmlPropertyParser prop_parser = new XmlPropertyParser();
-		cities = prop_parser.readConfig("src/xml/resource/wdata.xml");
-		/*
-		if(cities != null)
-		{
-			for(CityInfo city: cities) {
-				System.out.println(city.ToString());
-			}
-		}
-		*/
+		cities = prop_parser.readConfig("../resources/xml_configs/wdata.xml");
 		return cities;
 	}
 	

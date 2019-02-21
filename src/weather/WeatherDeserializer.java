@@ -91,52 +91,8 @@ public class WeatherDeserializer {
     		return null;
 		}
 		
-		/*
-		if(values != null)
-		{
-			for(String value: values) {
-				if(site_name.equals("Dir"))
-				{
-					temp = Double.valueOf(values.get(0));
-					wind_status = values.get(1);
-					wind_spd = Double.valueOf(values.get(2));
-					WeatherData weather_data = new WeatherData(temp, status, new Wind(wind_spd, wind_status, wind_direction), 
-							new Additional(humidity, visibility, pressure));
-				}
-				else if(site_name.equals("Dalivali"))
-				{
-					temp = Double.valueOf(values.get(0));
-					status = values.get(1);
-					wind_spd = Double.valueOf(values.get(2));
-					wind_direction = values.get(3);
-					if(values.size() > 4)
-					{
-						pressure = Integer.valueOf(values.get(4));
-						humidity = Integer.valueOf(values.get(5));
-					}
-					WeatherData weather_data = new WeatherData(temp, status, new Wind(wind_spd, wind_status, wind_direction), 
-							new Additional(humidity, visibility, pressure));
-				}
-				else if(site_name.equals("Sinoptik"))
-				{
-					temp = Double.valueOf(values.get(0));
-					wind_status = values.get(1);
-					if(values.size() > 2)
-					{
-					pressure = Integer.valueOf(values.get(2));
-					humidity = Integer.valueOf(values.get(3));
-					visibility = Double.valueOf(values.get(4));
-					}
-					WeatherData weather_data = new WeatherData(temp, status, new Wind(wind_spd, wind_status, wind_direction), 
-							new Additional(humidity, visibility, pressure));
-				}
-				else {
-					logger.log(Level.SEVERE, this.getClass().getName().toString() + "Unknown site name.");
-					return;
-				}
-				*/
 				
-			}
+	}
 	
 	public void printWeatherData(WeatherData weather_data)
 	{

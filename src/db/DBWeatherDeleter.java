@@ -1,0 +1,121 @@
+package db;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import logging.PropLogger;
+import model.WeatherData;
+
+public class DBWeatherDeleter {
+
+DBConnector db = null;
+	
+	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
+	
+	private static final String SQL_DELETE_WIND = "DELETE FROM \"Wind\" WHERE wind_id = ?\n";
+	private static final String SQL_DELETE_CONFIG = "DELETE FROM \"Config\" WHERE config_id = ?\n";
+	private static final String SQL_DELETE_ADDITIONAL  = "DELETE FROM \"Additional\" WHERE add_id = ?\n";
+    private static final String SQL_DELETE_WEATHER = "DELETE FROM \"Weather\" WHERE weather_id = ?\n";
+    
+
+    public DBWeatherDeleter(DBConnector db) {
+		this.db = db;
+	}
+	
+	public int deleteWind(String SQL_WIND, WeatherData weather_data, Long wind_id)
+	{
+		int affectedRows = 0;
+		
+		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) {
+			 
+			pstmt.setLong(1, wind_id);
+ 
+            affectedRows = pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+            return 0;
+        } 
+		return affectedRows;
+	}
+	
+	public int deleteConfig(String SQL_CONFIG, WeatherData weather_data, Long config_id)
+	{
+		int affectedRows = 0;
+		
+		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) {
+			 
+			pstmt.setLong(1, config_id);
+            affectedRows = pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+            return 0;
+        } 
+		return affectedRows;
+	}
+	
+	public int deleteAdditional(String SQL_ADD, WeatherData weather_data, Long add_id)
+	{
+		int affectedRows = 0;
+		
+		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) {
+			 
+			pstmt.setLong(1, add_id);
+            affectedRows = pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+            return 0;
+        } 
+		return affectedRows;
+	}
+	
+	public int deleteWeather(String SQL_WEATHER, WeatherData weather_data, Long weather_id, Long add_id, Long config_id, Long wind_id) {
+		
+		int affectedRows = 0;
+		
+		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) {
+			 
+			pstmt.setLong(1, weather_id);
+            affectedRows = pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+            return 0;
+        } 
+		return affectedRows;
+	}
+	
+	public void deleteWeatherList(List<WeatherData> weather_list) {
+		
+		long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
+		long wind_upd = 0, config_upd = 0, weather_upd = 0, add_upd = 0;
+		
+		for(WeatherData weather_data: weather_list)
+        {
+			wind_id = weather_data.getWind_data().getId();
+			config_id = weather_data.getConfig_data().getId();
+			add_id = weather_data.getAdditional_data().getId();
+			weather_id = weather_data.getId();
+			
+			
+	        
+	        weather_upd += deleteWeather(SQL_DELETE_WEATHER, weather_data, weather_id, add_id, config_id, wind_id);
+	        wind_upd += deleteWind(SQL_DELETE_WIND, weather_data, wind_id);
+	        config_upd += deleteConfig(SQL_DELETE_CONFIG, weather_data, config_id);
+	        add_upd += deleteAdditional(SQL_DELETE_ADDITIONAL, weather_data, add_id); 
+	            
+        }
+		
+		logger.info(this.getClass().getName().toString() + ": Delete:\n Wind:" + wind_upd + " rows.\n" +
+			    "Additional:" + add_upd + " rows.\n" + "Config:" + config_upd + " rows.\n" + "Weather:" + weather_upd + " rows.\n" +
+			    "Data deleted successfully.");
+
+	}
+
+}

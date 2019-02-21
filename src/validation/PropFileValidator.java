@@ -14,15 +14,12 @@ import java.util.logging.Logger;
 
 import logging.PropLogger;
 import property.CityConfig;
-import property.CityPropReader;
 import property.SequentialProperties;
 
 public class PropFileValidator extends Validator implements IValidator{
 	
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	private List<String> errorMessages = new ArrayList<String>();
-	private CityPropReader prop_reader;
-	private List<CityConfig> valid_cities = new ArrayList<CityConfig>();
 	
 	public Properties validateFormat(Properties test_prop, String file_path) {
 		
@@ -56,7 +53,7 @@ public class PropFileValidator extends Validator implements IValidator{
 			String[] city_data, url_data;
 			HashMap<String, String> url_map = new HashMap<String,String>();
 			try {
-			        for (Map.Entry e : (Set<Map.Entry<Object,Object>>)test_prop.entrySet()){
+			        for (Map.Entry<Object,Object> e : (Set<Map.Entry<Object,Object>>)test_prop.entrySet()){
 			        	String city_str = test_prop.getProperty(e.getKey().toString());
 						city_data = city_str.split(";");
 						for(int i=1; i<city_data.length; i++) {
@@ -83,7 +80,7 @@ public class PropFileValidator extends Validator implements IValidator{
 	
 	public static boolean validatePropFile()
 	{
-		String propfile_path = "resource/wdata.properties";
+		String propfile_path = "../resources/prop_configs/metdata.properties";
 		Properties test_prop = new SequentialProperties();
 		boolean isValid = false;	
 		PropFileValidator file_validator = new PropFileValidator();

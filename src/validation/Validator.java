@@ -3,15 +3,12 @@ package validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.logging.Logger;
 
-import logging.PropLogger;
 import property.CityConfig;
 import property.CityPropReader;
 
 public abstract class Validator {
 	
-	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	
 	private List<String> errorMessages = new ArrayList<String>();
 	private CityPropReader prop_reader;
@@ -20,7 +17,7 @@ public abstract class Validator {
 	public List<CityConfig> initCities()
 	{
 		List<CityConfig> cities = new ArrayList<CityConfig>();
-		prop_reader = new CityPropReader("resource/metdata.properties");
+		prop_reader = new CityPropReader("../resources/prop_configs/metdata.properties");
 		cities = prop_reader.buildCityConfig();
 		return cities;
 	}

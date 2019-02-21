@@ -1,11 +1,7 @@
 package validation;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -16,8 +12,6 @@ import logging.PropLogger;
 import property.CityConfig;
 import property.CityPropReader;
 import weather.WType;
-import xml.XmlPropertyParser;
-import xml.XmlPropertyValidator;
 
 public class PropObjectValidator extends Validator implements IValidator{
 	
@@ -100,14 +94,14 @@ public class PropObjectValidator extends Validator implements IValidator{
 	public List<CityConfig> initCities()
 	{
 		List<CityConfig> cities = new ArrayList<CityConfig>();
-		prop_reader = new CityPropReader("resource/metdata.properties");
+		prop_reader = new CityPropReader("../resources/prop_configs/metdata.properties");
 		cities = prop_reader.buildCityConfig();
 		return cities;
 	}
 	
 	private static boolean containsCity(List<CityConfig> cities, String city_name) {
 	    for (CityConfig city: cities) {
-	        if (city.getCityName().equals(city_name)) { // I used getId(), replace that by the accessor you actually need
+	        if (city.getCityName().equals(city_name)) {
 	            return true;
 	        }
 	    }
@@ -144,11 +138,11 @@ public class PropObjectValidator extends Validator implements IValidator{
 					}
 					if(valid_urls) 
 					{
-						for(Map.Entry ent: city.getSite_map().entrySet())
+						for(Map.Entry<String, HashMap<WType, String>> ent: city.getSite_map().entrySet())
 						{
 							inner_map = new HashMap<WType, String>();
 							HashMap<WType, String> cur_map = (HashMap<WType, String>) ent.getValue();
-							for(Map.Entry reg_entry: cur_map.entrySet())
+							for(Map.Entry<WType, String> reg_entry: cur_map.entrySet())
 							{
 								valid_regex = reg_validator.validateRegex(reg_entry.getValue().toString(), city_idx);
 								if(valid_regex == true) inner_map.put(WType.valueOf(reg_entry.getKey().toString()), reg_entry.getValue().toString());
