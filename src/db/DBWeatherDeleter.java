@@ -30,16 +30,19 @@ DBConnector db = null;
 	{
 		int affectedRows = 0;
 		
-		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) {
-			 
-			pstmt.setLong(1, wind_id);
- 
-            affectedRows = pstmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
-            return 0;
-        } 
+		if (weather_data != null)
+		{
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) {
+				 
+				pstmt.setLong(1, wind_id);
+	 
+	            affectedRows = pstmt.executeUpdate();
+	            
+	        } catch (SQLException ex) {
+	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+	            return 0;
+	        } 
+		}
 		return affectedRows;
 	}
 	
@@ -47,15 +50,18 @@ DBConnector db = null;
 	{
 		int affectedRows = 0;
 		
-		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) {
-			 
-			pstmt.setLong(1, config_id);
-            affectedRows = pstmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
-            return 0;
-        } 
+		if (weather_data != null)
+		{
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) {
+				 
+				pstmt.setLong(1, config_id);
+	            affectedRows = pstmt.executeUpdate();
+	            
+	        } catch (SQLException ex) {
+	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+	            return 0;
+	        } 
+		}
 		return affectedRows;
 	}
 	
@@ -63,15 +69,18 @@ DBConnector db = null;
 	{
 		int affectedRows = 0;
 		
-		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) {
-			 
-			pstmt.setLong(1, add_id);
-            affectedRows = pstmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
-            return 0;
-        } 
+		if (weather_data != null)
+		{
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) {
+				 
+				pstmt.setLong(1, add_id);
+	            affectedRows = pstmt.executeUpdate();
+	            
+	        } catch (SQLException ex) {
+	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+	            return 0;
+	        } 
+		}
 		return affectedRows;
 	}
 	
@@ -79,15 +88,18 @@ DBConnector db = null;
 		
 		int affectedRows = 0;
 		
-		try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) {
-			 
-			pstmt.setLong(1, weather_id);
-            affectedRows = pstmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
-            return 0;
-        } 
+		if (weather_data != null)
+		{
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) {
+				 
+				pstmt.setLong(1, weather_id);
+	            affectedRows = pstmt.executeUpdate();
+	            
+	        } catch (SQLException ex) {
+	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
+	            return 0;
+	        } 
+		}
 		return affectedRows;
 	}
 	
@@ -96,6 +108,9 @@ DBConnector db = null;
 		long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
 		long wind_upd = 0, config_upd = 0, weather_upd = 0, add_upd = 0;
 		
+		
+		if (weather_list != null)
+		{
 		for(WeatherData weather_data: weather_list)
         {
 			wind_id = weather_data.getWind_data().getId();
@@ -115,6 +130,7 @@ DBConnector db = null;
 		logger.info(this.getClass().getName().toString() + ": Delete:\n Wind:" + wind_upd + " rows.\n" +
 			    "Additional:" + add_upd + " rows.\n" + "Config:" + config_upd + " rows.\n" + "Weather:" + weather_upd + " rows.\n" +
 			    "Data deleted successfully.");
+		}
 
 	}
 

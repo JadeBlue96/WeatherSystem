@@ -7,8 +7,8 @@ public class Additional {
 	private Integer pressure;
 	
 	public Additional() {
-		humidity = pressure = 0;
-		visibility = 0.0;
+		humidity = pressure = null;
+		visibility = null;
 		id = (long) 0;
 	}
 	public Additional(Integer humidity, Double visibility, Integer pressure) {

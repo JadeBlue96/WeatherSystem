@@ -129,44 +129,52 @@ public class DBWeatherSelector {
         List<Additional> add_list = getAddData();
         List<Wind> wind_list = getWindData();
         weather_dblist = getWeatherData();
-        for(WeatherData weather_db_data: weather_dblist)
+        
+        if(weather_dblist != null)
         {
-        	Long db_add_id = weather_db_data.getWeather_add_id();
-        	Long db_config_id = weather_db_data.getWeather_config_id();
-        	Long db_wind_id = weather_db_data.getWeather_wind_id();
-        	WeatherData weather_obj_data = new WeatherData();
-        	for(Additional add: add_list)
-        	{
-        		if(add.getId().equals(db_add_id)) {
-        			weather_obj_data.setAdditional_data(add);
-        			break;
-        		}
-        	}
-        	for(ConfigData config: conf_list)
-        	{
-        		if(config.getId().equals(db_config_id))
-        		{
-        			weather_obj_data.setConfig_data(config);
-        			break;
-        		}
-        	}
-        	for(Wind wind: wind_list)
-        	{
-        		if(wind.getId().equals(db_wind_id))
-        		{
-        			weather_obj_data.setWind_data(wind);
-        			break;
-        		}
-        	}
-        	weather_obj_data.setTemp(weather_db_data.getTemp());
-        	weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
-        	weather_obj_data.setStatus(weather_db_data.getStatus());
-        	weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
-        	
-        	weather_objlist.add(weather_obj_data);
+	        for(WeatherData weather_db_data: weather_dblist)
+	        {
+	        	Long db_add_id = weather_db_data.getWeather_add_id();
+	        	Long db_config_id = weather_db_data.getWeather_config_id();
+	        	Long db_wind_id = weather_db_data.getWeather_wind_id();
+	        	WeatherData weather_obj_data = new WeatherData();
+	        	for(Additional add: add_list)
+	        	{
+	        		if(add.getId().equals(db_add_id)) {
+	        			weather_obj_data.setAdditional_data(add);
+	        			break;
+	        		}
+	        	}
+	        	for(ConfigData config: conf_list)
+	        	{
+	        		if(config.getId().equals(db_config_id))
+	        		{
+	        			weather_obj_data.setConfig_data(config);
+	        			break;
+	        		}
+	        	}
+	        	for(Wind wind: wind_list)
+	        	{
+	        		if(wind.getId().equals(db_wind_id))
+	        		{
+	        			weather_obj_data.setWind_data(wind);
+	        			break;
+	        		}
+	        	}
+	        	weather_obj_data.setTemp(weather_db_data.getTemp());
+	        	weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
+	        	weather_obj_data.setStatus(weather_db_data.getStatus());
+	        	weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
+	        	
+	        	weather_objlist.add(weather_obj_data);
+	        }
+	        
+        	return weather_objlist;
         }
         
-        return weather_objlist;
+        logger.log(Level.SEVERE, this.getClass().getName().toString() + " : Failed to retrieve data from PostgreSQL database.");
+        return null;
+        
 	}
 
 }

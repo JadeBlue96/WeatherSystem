@@ -21,7 +21,7 @@ public class WeatherData {
 	
 	public WeatherData() {
 		temp = 0;
-		feel_temp = 0;
+		feel_temp = null;
 		status = "";
 		wind_data = new Wind();
 		additional_data = new Additional();
