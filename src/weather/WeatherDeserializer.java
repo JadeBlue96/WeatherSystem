@@ -4,6 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,6 +88,7 @@ public class WeatherDeserializer {
 		    if(add_data != null)	weather_data.setAdditional_data(add_data);
 	    	if(wind_data != null)	weather_data.setWind_data(wind_data);
 	    	if(config_data != null) weather_data.setConfig_data(config_data);
+	    	if(weather_data != null) weather_data.setQuery_date(Timestamp.from(Instant.now()));
 	    	return weather_data;
 		} catch (FileNotFoundException e) {
 			logger.log(Level.SEVERE, this.getClass().getName().toString() + "Values file not found.");

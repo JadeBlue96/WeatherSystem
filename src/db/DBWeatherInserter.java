@@ -1,9 +1,12 @@
 package db;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +26,8 @@ public class DBWeatherInserter {
             + "VALUES(?,?,?)\n";
 	private static final String SQL_INSERT_ADDITIONAL  = "INSERT INTO \"Additional\"(humidity, visibility, pressure) "
             + "VALUES(?,?,?)\n";
-    private static final String SQL_INSERT_WEATHER = "INSERT INTO \"Weather\"(temp, feel_temp, status, weather_add_id, weather_config_id, weather_wind_id) "
-            + "VALUES(?,?,?,?,?,?)\n";
+    private static final String SQL_INSERT_WEATHER = "INSERT INTO \"Weather\"(temp, feel_temp, status, weather_add_id, weather_config_id, weather_wind_id, query_date) "
+            + "VALUES(?,?,?,?,?,?,?)\n";
     
 
     public DBWeatherInserter(DBConnector db) {
@@ -118,6 +121,7 @@ public class DBWeatherInserter {
             pstmt.setLong(4, add_id);
             pstmt.setLong(5, config_id);
             pstmt.setLong(6, wind_id);
+            pstmt.setTimestamp(7, Timestamp.from(weather_data.getQuery_date().toInstant()));
  
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {

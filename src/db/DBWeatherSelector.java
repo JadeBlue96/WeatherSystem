@@ -3,7 +3,11 @@ package db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,8 +109,9 @@ public class DBWeatherSelector {
                 Long weather_add_id = rs.getLong("weather_add_id");
                 Long weather_config_id = rs.getLong("weather_config_id");
                 Long weather_wind_id = rs.getLong("weather_wind_id");
+                Timestamp query_date = rs.getTimestamp("query_date");
                 
-                WeatherData db_weather_data = new WeatherData(id, temp, feel_temp, status,weather_add_id, weather_config_id, weather_wind_id);
+                WeatherData db_weather_data = new WeatherData(id, temp, feel_temp, status,weather_add_id, weather_config_id, weather_wind_id, query_date);
                 weather_dblist.add(db_weather_data);
             }
         } catch (SQLException e) {
@@ -156,6 +161,7 @@ public class DBWeatherSelector {
         	weather_obj_data.setTemp(weather_db_data.getTemp());
         	weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
         	weather_obj_data.setStatus(weather_db_data.getStatus());
+        	weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
         	
         	weather_objlist.add(weather_obj_data);
         }

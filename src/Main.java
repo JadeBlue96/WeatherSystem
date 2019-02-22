@@ -75,7 +75,7 @@ public class Main {
 			weather_list.get(0).setFeel_temp(666);
 			//dbw_repos.DBUpdate(weather_list);
 			List<WeatherData> db_weather_list = dbw_repos.DBSelect();
-			dbw_repos.DBDelete(weather_list);
+			//dbw_repos.DBDelete(weather_list);
 			WeatherExtractor.printWeatherList(db_weather_list);
 			dbw_repos.close();
 			

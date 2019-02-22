@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class WeatherData {
 	
@@ -10,6 +13,7 @@ public class WeatherData {
 	private Wind wind_data;
 	private Additional additional_data;
 	private ConfigData config_data;
+	private Timestamp query_date;
 	
 	private Long weather_add_id;
 	private Long weather_config_id;
@@ -23,16 +27,19 @@ public class WeatherData {
 		additional_data = new Additional();
 		setConfig_data(new ConfigData());
 		weather_add_id = weather_config_id = weather_wind_id = (long) 0;
+		query_date = null;
 	}
-	public WeatherData(Integer temp, Integer feel_temp, String status, Wind wind_data, Additional additional_data, ConfigData config_data) {
+	public WeatherData(Integer temp, Integer feel_temp, String status, Wind wind_data, 
+			Additional additional_data, ConfigData config_data, Timestamp query_date) {
 		this.temp = temp;
 		this.status = status;
 		this.wind_data = wind_data;
 		this.additional_data = additional_data;
 		this.setConfig_data(config_data);
+		this.query_date = query_date;
 	}
 	public WeatherData(Long id,Integer temp, Integer feel_temp, String status,
-			Long weather_add_id, Long weather_config_id, Long weather_wind_id) {
+			Long weather_add_id, Long weather_config_id, Long weather_wind_id, Timestamp query_date) {
 		this.id = id;
 		this.temp = temp;
 		this.feel_temp = feel_temp;
@@ -40,6 +47,7 @@ public class WeatherData {
 		this.weather_add_id = weather_add_id;
 		this.weather_config_id = weather_config_id;
 		this.weather_wind_id = weather_wind_id;
+		this.query_date = query_date;
 	}
 	public Wind getWind_data() {
 		return wind_data;
@@ -68,7 +76,7 @@ public class WeatherData {
 	@Override
 	public String toString() {
 		return "WeatherData [temp=" + temp + "°C, feel_temp=" + feel_temp + "°C, status=" + status + ", wind_data=" + wind_data.toString() + ", additional_data="
-				+ additional_data.toString() + ", " + config_data.toString() + "]";
+				+ additional_data.toString() + ", " + config_data.toString() + "]" + " [Date added:" + query_date.toString() + "]";
 	}
 	public Integer getFeel_temp() {
 		return feel_temp;
@@ -97,6 +105,12 @@ public class WeatherData {
 	}
 	public Long getWeather_wind_id() {
 		return weather_wind_id;
+	}
+	public Timestamp getQuery_date() {
+		return query_date;
+	}
+	public void setQuery_date(Timestamp query_date) {
+		this.query_date = query_date;
 	}
 	
 	
