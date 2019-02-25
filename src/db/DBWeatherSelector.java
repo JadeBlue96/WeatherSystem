@@ -132,42 +132,44 @@ public class DBWeatherSelector {
         
         if(weather_dblist != null)
         {
-	        for(WeatherData weather_db_data: weather_dblist)
-	        {
-	        	Long db_add_id = weather_db_data.getWeather_add_id();
+        	Long timeStarted = System.currentTimeMillis();
+        	
+        	weather_dblist.parallelStream().forEach(weather_db_data -> {
+        		Long db_add_id = weather_db_data.getWeather_add_id();
 	        	Long db_config_id = weather_db_data.getWeather_config_id();
 	        	Long db_wind_id = weather_db_data.getWeather_wind_id();
 	        	WeatherData weather_obj_data = new WeatherData();
-	        	for(Additional add: add_list)
-	        	{
+	        	add_list.forEach(add -> {
 	        		if(add.getId().equals(db_add_id)) {
 	        			weather_obj_data.setAdditional_data(add);
-	        			break;
+	        			return;
 	        		}
-	        	}
-	        	for(ConfigData config: conf_list)
-	        	{
+	        	});
+	        	conf_list.forEach(config -> {
 	        		if(config.getId().equals(db_config_id))
 	        		{
 	        			weather_obj_data.setConfig_data(config);
-	        			break;
+	        			return;
 	        		}
-	        	}
-	        	for(Wind wind: wind_list)
-	        	{
+	        	});
+
+	        	wind_list.forEach(wind -> {
 	        		if(wind.getId().equals(db_wind_id))
 	        		{
 	        			weather_obj_data.setWind_data(wind);
-	        			break;
+	        			return;
 	        		}
-	        	}
+	        	});
+
 	        	weather_obj_data.setTemp(weather_db_data.getTemp());
 	        	weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
 	        	weather_obj_data.setStatus(weather_db_data.getStatus());
 	        	weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
 	        	
 	        	weather_objlist.add(weather_obj_data);
-	        }
+        	});
+        	
+        	System.out.println("Parallel stream db select time: " + (System.currentTimeMillis() - timeStarted) + "ms");
 	        
         	return weather_objlist;
         }

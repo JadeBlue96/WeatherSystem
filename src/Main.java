@@ -63,7 +63,7 @@ public class Main {
 		WeatherExtractor.printWeatherList(weather_list);
 		
 		
-		/*
+		
 		CityPropReader db_credentials = new CityPropReader("../resources/db_credentials/db_cred.properties");
 		final String username = db_credentials.getPropertyValue("username");
 		final String password = db_credentials.getPropertyValue("password");
@@ -76,13 +76,13 @@ public class Main {
 			dbw_repos.DBInsert(weather_list);
 			//weather_list.get(0).setFeel_temp(666);
 			//dbw_repos.DBUpdate(weather_list);
-			List<WeatherData> db_weather_list = dbw_repos.DBSelect();
+			//List<WeatherData> db_weather_list = dbw_repos.DBSelect();
 			//dbw_repos.DBDelete(weather_list);
-			WeatherExtractor.printWeatherList(db_weather_list);
+			//WeatherExtractor.printWeatherList(db_weather_list);
 			dbw_repos.close();
 			
 		}
-		*/
+		
 		
 		
 	

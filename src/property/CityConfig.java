@@ -7,8 +7,8 @@ import weather.WType;
 public class CityConfig {
 	private String cityName;
 	private String countryName;
-	private ConcurrentHashMap<String, String> url_map;
-	private ConcurrentHashMap<String, ConcurrentHashMap<WType,String>> site_map;
+	private HashMap<String, String> url_map;
+	private HashMap<String, HashMap<WType,String>> site_map;
 	
 	
 	public CityConfig()
@@ -18,7 +18,7 @@ public class CityConfig {
 		setSite_map(null);
 		setUrl_map(null);
 	}
-	public CityConfig(String city, String country, ConcurrentHashMap<String, String> url_map, ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> site_map) {
+	public CityConfig(String city, String country, HashMap<String, String> url_map, HashMap<String, HashMap<WType, String>> site_map) {
 		this.setCityName(city);
 		this.setCountryName(country);
 		this.setUrl_map(url_map);
@@ -50,26 +50,26 @@ public class CityConfig {
 		}
 		return res;
 	}
-	public String printRegex(ConcurrentHashMap<WType, String> concurrentHashMap) {
+	public String printRegex(HashMap<WType, String> cur_map) {
 		String res = "\n";
-		for (Object k: concurrentHashMap.keySet()) {
-			res += k.toString() + ": " + concurrentHashMap.get(k) + "\n";
+		for (Object k: cur_map.keySet()) {
+			res += k.toString() + ": " + cur_map.get(k) + "\n";
 		}
 		return res;
 	}
 	public String ToString() {
 		return "City: "+ this.getCityName() + "\nCountry: "+ this.getCountryName() + "\nURLs:" + printUrl() + "\nRegex:" + printSiteMap();	
 	}
-	public ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> getSite_map() {
+	public HashMap<String, HashMap<WType, String>> getSite_map() {
 		return site_map;
 	}
-	public void setSite_map(ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> site_map) {
+	public void setSite_map(HashMap<String, HashMap<WType, String>> site_map) {
 		this.site_map = site_map;
 	}
-	public ConcurrentHashMap<String, String> getUrl_map() {
+	public HashMap<String, String> getUrl_map() {
 		return url_map;
 	}
-	public void setUrl_map(ConcurrentHashMap<String, String> url_map) {
+	public void setUrl_map(HashMap<String, String> url_map) {
 		this.url_map = url_map;
 	}
 	

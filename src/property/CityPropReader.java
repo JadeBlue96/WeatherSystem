@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,8 +24,8 @@ public class CityPropReader extends CityConfig {
     private String[] url_data;
     private String[] regex_data;
     private String[] site_elements;
-    private ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> weather_map;
-    private ConcurrentHashMap<WType, String> wtype_map;
+    private HashMap<String, HashMap<WType, String>> weather_map;
+    private HashMap<WType, String> wtype_map;
     CityPropReader all_props;
     
 	
@@ -78,11 +77,11 @@ public class CityPropReader extends CityConfig {
 		return new_str;
 	}
 	
-	public ConcurrentHashMap<WType, String> mapWeatherTypes(Set<String> types, String site, String value)
+	public HashMap<WType, String> mapWeatherTypes(Set<String> types, String site, String value)
 	{
-		ConcurrentHashMap<WType, String> wtype_map = new ConcurrentHashMap<WType, String>();
+		HashMap<WType, String> wtype_map = new HashMap<WType, String>();
 		
-		for (Map.Entry<Object,Object> e : (Set<Map.Entry<Object,Object>>)prop.entrySet()){
+		prop.entrySet().forEach(e -> {
 			String cur_key = e.getKey().toString();
 			if(e.getKey().toString().contains("regex"))
 			{
@@ -95,20 +94,18 @@ public class CityPropReader extends CityConfig {
 				}
 				
 			}
-		}
+		});
 		return wtype_map;
 	}
 	
-	public ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> mapSiteToWeatherTypes(Set<String> types, Set<String> sites, String new_str)
+	public HashMap<String, HashMap<WType, String>> mapSiteToWeatherTypes(Set<String> types, Set<String> sites, String new_str)
 	{
-		weather_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType, String>>();
-    	wtype_map = new ConcurrentHashMap<WType, String>();
-    
-		for(String cur_site: sites)
-		{
-			wtype_map = mapWeatherTypes(types, cur_site, new_str);
+		weather_map = new HashMap<String, HashMap<WType, String>>();
+    	wtype_map = new HashMap<WType, String>();
+    	sites.forEach(cur_site -> {
+    		wtype_map = mapWeatherTypes(types, cur_site, new_str);
 			weather_map.put(cur_site, wtype_map);
-		}
+    	});
     	return weather_map;
 	}
 	
@@ -116,7 +113,7 @@ public class CityPropReader extends CityConfig {
 	public Set<String> fillSites()
 	{
 		Set<String> sites = new HashSet<String>();
-		for (Map.Entry<Object,Object> e : (Set<Map.Entry<Object,Object>>)prop.entrySet()){
+		prop.entrySet().forEach(e -> {
 			String cur_key = e.getKey().toString();
 			if(e.getKey().toString().contains("regex"))
 			{
@@ -126,7 +123,7 @@ public class CityPropReader extends CityConfig {
 				}
 				
 			}
-		}
+		});
 		return sites;
 	}
 	
@@ -135,11 +132,11 @@ public class CityPropReader extends CityConfig {
 		all_props = new CityPropReader("../resources/prop_configs/metdata.properties");
 		Set<String> enum_values = initTypes();
     	Set<String> sites;
-    	ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> weather_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType, String>>();
-    	ConcurrentHashMap<String, String> url_map = new ConcurrentHashMap<String,String>();
+    	HashMap<String, HashMap<WType, String>> weather_map = new HashMap<String, HashMap<WType, String>>();
+    	HashMap<String, String> url_map = new HashMap<String,String>();
     	List<CityConfig> cities = new ArrayList<CityConfig>();
     	CityConfig city = new CityConfig();
-    	
+    
     	for (Map.Entry<Object,Object> e : (Set<Map.Entry<Object,Object>>)prop.entrySet()){
     		String cur_key = e.getKey().toString();
     		String[] cur_data = cur_key.split("\\.");
@@ -158,7 +155,7 @@ public class CityPropReader extends CityConfig {
 	    			else if(city_data[2].equals("sites"))
 	    			{
 	    				site_elements = new_str.split(";");
-	    				url_map = new ConcurrentHashMap<String, String>();
+	    				url_map = new HashMap<String, String>();
 	    				for(int i=0; i<site_elements.length; i++) {
 	    					url_data = site_elements[i].split(",");
 	    					if(url_data.length == 2)

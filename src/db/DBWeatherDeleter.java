@@ -105,30 +105,31 @@ DBConnector db = null;
 	
 	public void deleteWeatherList(List<WeatherData> weather_list) {
 		
-		long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
-		long wind_upd = 0, config_upd = 0, weather_upd = 0, add_upd = 0;
+		
+		long[] wind_upd = {0}, config_upd = {0}, weather_upd = {0}, add_upd = {0};
 		
 		
 		if (weather_list != null)
 		{
-		for(WeatherData weather_data: weather_list)
-        {
-			wind_id = weather_data.getWind_data().getId();
-			config_id = weather_data.getConfig_data().getId();
-			add_id = weather_data.getAdditional_data().getId();
-			weather_id = weather_data.getId();
-			
-			
-	        
-	        weather_upd += deleteWeather(SQL_DELETE_WEATHER, weather_data, weather_id, add_id, config_id, wind_id);
-	        wind_upd += deleteWind(SQL_DELETE_WIND, weather_data, wind_id);
-	        config_upd += deleteConfig(SQL_DELETE_CONFIG, weather_data, config_id);
-	        add_upd += deleteAdditional(SQL_DELETE_ADDITIONAL, weather_data, add_id); 
-	            
-        }
+			Long timeStarted = System.currentTimeMillis();
+			weather_list.parallelStream().forEach(weather_data -> {
+				long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
+				
+				wind_id = weather_data.getWind_data().getId();
+				config_id = weather_data.getConfig_data().getId();
+				add_id = weather_data.getAdditional_data().getId();
+				weather_id = weather_data.getId();
+				
+		        weather_upd[0] += deleteWeather(SQL_DELETE_WEATHER, weather_data, weather_id, add_id, config_id, wind_id);
+		        wind_upd[0] += deleteWind(SQL_DELETE_WIND, weather_data, wind_id);
+		        config_upd[0] += deleteConfig(SQL_DELETE_CONFIG, weather_data, config_id);
+		        add_upd[0] += deleteAdditional(SQL_DELETE_ADDITIONAL, weather_data, add_id);
+			});
 		
-		logger.info(this.getClass().getName().toString() + ": Delete:\n Wind:" + wind_upd + " rows.\n" +
-			    "Additional:" + add_upd + " rows.\n" + "Config:" + config_upd + " rows.\n" + "Weather:" + weather_upd + " rows.\n" +
+			System.out.println("Parallel stream db delete time: " + (System.currentTimeMillis() - timeStarted) + "ms");
+			
+		logger.info(this.getClass().getName().toString() + ": Delete:\n Wind:" + wind_upd[0] + " rows.\n" +
+			    "Additional:" + add_upd[0] + " rows.\n" + "Config:" + config_upd[0] + " rows.\n" + "Weather:" + weather_upd[0] + " rows.\n" +
 			    "Data deleted successfully.");
 		}
 

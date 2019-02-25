@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -114,7 +113,7 @@ public class WeatherExtractor {
         
     }
 	
-	public void writeToFile(ConcurrentHashMap<String, String> tagValues, String file_name) throws IOException
+	public void writeToFile(HashMap<String, String> tagValues, String file_name) throws IOException
 	{
 		Writer writer = new BufferedWriter(new OutputStreamWriter(
 	              new FileOutputStream(file_name), "utf-8"));
@@ -129,15 +128,15 @@ public class WeatherExtractor {
 		writer.close();
 	}
 	
-	public ConcurrentHashMap<String, String> mapMatches(List<Matcher> matchers, ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> reg_map) {
-		ConcurrentHashMap<String, String> mapped_values = new ConcurrentHashMap<String, String>();
+	public HashMap<String, String> mapMatches(List<Matcher> matchers, HashMap<String, HashMap<WType, String>> reg_map) {
+		HashMap<String, String> mapped_values = new HashMap<String, String>();
 		matchers.parallelStream().forEach(matcher -> {
 			while (matcher.find()) {
 				String pattern = matcher.pattern().pattern();
 				String key = "";
 				
-				for (ConcurrentHashMap.Entry<String, ConcurrentHashMap<WType, String>> ent: reg_map.entrySet()) {
-					ConcurrentHashMap<WType,String> reg_inner_map = (ConcurrentHashMap<WType, String>) ent.getValue();
+				for (HashMap.Entry<String, HashMap<WType, String>> ent: reg_map.entrySet()) {
+					HashMap<WType,String> reg_inner_map = (HashMap<WType, String>) ent.getValue();
 					for(HashMap.Entry<WType, String> inner_ent: reg_inner_map.entrySet())
 					{
 				        if (Objects.equals(pattern, inner_ent.getValue().toString())) {
@@ -154,16 +153,16 @@ public class WeatherExtractor {
 	
 	public void parseDataFromHTML(String html, String site_name, CityConfig city) throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
-		ConcurrentHashMap<String, ConcurrentHashMap<WType,String>> reg_map = city.getSite_map();
-		ConcurrentHashMap<String, String> tagValues = new ConcurrentHashMap<String, String>();
+		HashMap<String, HashMap<WType,String>> reg_map = city.getSite_map();
+		HashMap<String, String> tagValues = new HashMap<String, String>();
 		final List<Matcher> matchers = new ArrayList<Matcher>();
 		
 		
 		reg_map.entrySet().parallelStream().forEach((reg_entry) -> {
 			if(reg_entry.getKey().toString().equals(site_name))
 			{
-				ConcurrentHashMap<WType,String> reg_inner_map = (ConcurrentHashMap<WType, String>) reg_entry.getValue();
-				reg_inner_map.entrySet().parallelStream().forEach(reg_inner_entry -> {
+				HashMap<WType,String> reg_inner_map = (HashMap<WType, String>) reg_entry.getValue();
+				reg_inner_map.entrySet().forEach(reg_inner_entry -> {
 					String str_entry = reg_inner_entry.getValue().toString();
 					Pattern p_entry = Pattern.compile(str_entry, Pattern.DOTALL);
 					matchers.add(p_entry.matcher(html));
@@ -236,9 +235,9 @@ public class WeatherExtractor {
 		WeatherDeserializer weather_deserializer = new WeatherDeserializer();
 		
 		Long timeStarted = System.currentTimeMillis();
-		cities.parallelStream().forEach(city -> {
+		cities.forEach(city -> {
 			WeatherData weather_data = new WeatherData();
-			ConcurrentHashMap<String,String> url_map = city.getUrl_map(); 
+			HashMap<String,String> url_map = city.getUrl_map(); 
 			try {
 				retrieveUrlData(city);
 				for(HashMap.Entry<String, String> url_entry: url_map.entrySet())
