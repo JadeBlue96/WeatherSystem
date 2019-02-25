@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,8 +25,8 @@ public class CityPropReader extends CityConfig {
     private String[] url_data;
     private String[] regex_data;
     private String[] site_elements;
-    private HashMap<String, HashMap<WType, String>> weather_map;
-    private HashMap<WType, String> wtype_map;
+    private ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> weather_map;
+    private ConcurrentHashMap<WType, String> wtype_map;
     CityPropReader all_props;
     
 	
@@ -77,9 +78,9 @@ public class CityPropReader extends CityConfig {
 		return new_str;
 	}
 	
-	public HashMap<WType, String> mapWeatherTypes(Set<String> types, String site, String value)
+	public ConcurrentHashMap<WType, String> mapWeatherTypes(Set<String> types, String site, String value)
 	{
-		HashMap<WType, String> wtype_map = new HashMap<WType, String>();
+		ConcurrentHashMap<WType, String> wtype_map = new ConcurrentHashMap<WType, String>();
 		
 		for (Map.Entry<Object,Object> e : (Set<Map.Entry<Object,Object>>)prop.entrySet()){
 			String cur_key = e.getKey().toString();
@@ -98,10 +99,10 @@ public class CityPropReader extends CityConfig {
 		return wtype_map;
 	}
 	
-	public HashMap<String, HashMap<WType, String>> mapSiteToWeatherTypes(Set<String> types, Set<String> sites, String new_str)
+	public ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> mapSiteToWeatherTypes(Set<String> types, Set<String> sites, String new_str)
 	{
-		weather_map = new HashMap<String, HashMap<WType, String>>();
-    	wtype_map = new HashMap<WType, String>();
+		weather_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType, String>>();
+    	wtype_map = new ConcurrentHashMap<WType, String>();
     
 		for(String cur_site: sites)
 		{
@@ -134,8 +135,8 @@ public class CityPropReader extends CityConfig {
 		all_props = new CityPropReader("../resources/prop_configs/metdata.properties");
 		Set<String> enum_values = initTypes();
     	Set<String> sites;
-    	HashMap<String, HashMap<WType, String>> weather_map = new HashMap<String, HashMap<WType, String>>();
-    	HashMap<String, String> url_map = new HashMap<String,String>();
+    	ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> weather_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType, String>>();
+    	ConcurrentHashMap<String, String> url_map = new ConcurrentHashMap<String,String>();
     	List<CityConfig> cities = new ArrayList<CityConfig>();
     	CityConfig city = new CityConfig();
     	
@@ -157,7 +158,7 @@ public class CityPropReader extends CityConfig {
 	    			else if(city_data[2].equals("sites"))
 	    			{
 	    				site_elements = new_str.split(";");
-	    				url_map = new HashMap<String, String>();
+	    				url_map = new ConcurrentHashMap<String, String>();
 	    				for(int i=0; i<site_elements.length; i++) {
 	    					url_data = site_elements[i].split(",");
 	    					if(url_data.length == 2)

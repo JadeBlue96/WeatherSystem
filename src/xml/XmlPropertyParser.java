@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,9 +60,9 @@ public class XmlPropertyParser extends CityConfig {
             InputStream in = new FileInputStream(config_file);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             CityConfig city = null;
-            HashMap<String,String> url_map = new HashMap<String, String>();
-            HashMap<String, HashMap<WType,String>> reg_outer_map = new HashMap<String, HashMap<WType,String>>();
-            HashMap<WType,String> reg_inner_map = new HashMap<WType, String>();
+            ConcurrentHashMap<String, String> url_map = new ConcurrentHashMap<String, String>();
+            ConcurrentHashMap<String, ConcurrentHashMap<WType,String>> reg_outer_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType,String>>();
+            ConcurrentHashMap<WType,String> reg_inner_map = new ConcurrentHashMap<WType, String>();
             List<String> urls = new ArrayList<String>(), names = new ArrayList<String>();
             Set<String> enum_values = initTypes();
             UrlValidator url_validator = new UrlValidator();
@@ -129,7 +130,7 @@ public class XmlPropertyParser extends CityConfig {
                     if(endElement.getName().getLocalPart().equals(SITE))
                     {
                     	reg_outer_map.put(cur_site, reg_inner_map);
-                    	reg_inner_map = new HashMap<WType, String>(); 
+                    	reg_inner_map = new ConcurrentHashMap<WType, String>(); 
                     	
                     }
                     if (endElement.getName().getLocalPart().equals(CITY)) {
@@ -141,7 +142,7 @@ public class XmlPropertyParser extends CityConfig {
                     	
                     	Iterator<String> url_it = urls.iterator();
                     	Iterator<String> name_it = names.iterator();
-                    	url_map = new HashMap<String, String>();
+                    	url_map = new ConcurrentHashMap<String, String>();
                     	
                     	
                     	while(url_it.hasNext() && name_it.hasNext())
@@ -156,8 +157,8 @@ public class XmlPropertyParser extends CityConfig {
                         urls.removeAll(urls);
                         names.removeAll(names);
                         
-                        reg_inner_map = new HashMap<WType, String>(); 
-                        reg_outer_map = new HashMap<String, HashMap<WType, String>>();
+                        reg_inner_map = new ConcurrentHashMap<WType, String>(); 
+                        reg_outer_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType, String>>();
                         city_idx++;
                     }
                 }

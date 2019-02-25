@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,8 +113,8 @@ public class PropObjectValidator extends Validator implements IValidator{
 		
 		boolean valid_fields = false, valid_urls = false, valid_regex = false;
 		List<CityConfig> valid_cities = new ArrayList<CityConfig>();
-		HashMap<String, HashMap<WType,String>> reg_map = new HashMap<String, HashMap<WType, String>>();
-		HashMap<WType,String> inner_map = new HashMap<WType,String>();
+		ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> reg_map = new ConcurrentHashMap<String, ConcurrentHashMap<WType, String>>();
+		ConcurrentHashMap<WType, String> inner_map = new ConcurrentHashMap<WType,String>();
 		
 		if(cities != null)
 		{
@@ -138,10 +139,10 @@ public class PropObjectValidator extends Validator implements IValidator{
 					}
 					if(valid_urls) 
 					{
-						for(Map.Entry<String, HashMap<WType, String>> ent: city.getSite_map().entrySet())
+						for(Map.Entry<String, ConcurrentHashMap<WType, String>> ent: city.getSite_map().entrySet())
 						{
-							inner_map = new HashMap<WType, String>();
-							HashMap<WType, String> cur_map = (HashMap<WType, String>) ent.getValue();
+							inner_map = new ConcurrentHashMap<WType, String>();
+							ConcurrentHashMap<WType, String> cur_map = (ConcurrentHashMap<WType, String>) ent.getValue();
 							for(Map.Entry<WType, String> reg_entry: cur_map.entrySet())
 							{
 								valid_regex = reg_validator.validateRegex(reg_entry.getValue().toString(), city_idx);

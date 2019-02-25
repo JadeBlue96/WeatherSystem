@@ -16,12 +16,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -39,13 +41,16 @@ public class WeatherExtractor {
 	
 	public void retrieveUrlData(CityConfig city) throws MalformedURLException, IOException
     {
-		for(HashMap.Entry<String,String> ent: city.getUrl_map().entrySet())
-		{
+		
+		city.getUrl_map().entrySet().parallelStream().forEach((ent) ->  {
+			
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(ent.getValue().toString());
-			HttpResponse response = client.execute(request);
+			HttpResponse response;
+			try {
+				response = client.execute(request);
 			
-		
+			
 			logger.info("Response Code : " + response.getStatusLine().getStatusCode());
 		
 			BufferedReader rd = new BufferedReader(
@@ -59,29 +64,80 @@ public class WeatherExtractor {
 		
 		    writeHtmlToFile(result.toString(), ent.getKey().toString(), city);
 		    parseDataFromHTML(result.toString(), ent.getKey().toString(), city);
-		}
+			}
+		    catch (ClientProtocolException e) {
+		    	logger.log(Level.SEVERE, e.getMessage());
+		    	return;
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, e.getMessage());
+				return;
+			}
+		    }
+		);
+			
+		/*
+		Long timeStarted = System.currentTimeMillis();
+		city.getUrl_map().entrySet().stream().forEach((ent) ->  {
+			
+			HttpClient client = HttpClientBuilder.create().build();
+			HttpGet request = new HttpGet(ent.getValue().toString());
+			HttpResponse response;
+			try {
+				response = client.execute(request);
+			
+			
+			logger.info("Response Code : " + response.getStatusLine().getStatusCode());
+		
+			BufferedReader rd = new BufferedReader(
+				new InputStreamReader(response.getEntity().getContent()));
+		
+			StringBuffer result = new StringBuffer();
+			String line = "";
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+			}
+		
+		    writeHtmlToFile(result.toString(), ent.getKey().toString(), city);
+		    parseDataFromHTML(result.toString(), ent.getKey().toString(), city);
+			}
+		    catch (ClientProtocolException e) {
+		    	logger.log(Level.SEVERE, e.getMessage());
+		    	return;
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, e.getMessage());
+				return;
+			}
+		    }
+		);
+		System.out.println("Sequential stream query time: " + (System.currentTimeMillis() - timeStarted));
+		*/
         
     }
 	
-	public void writeToFile(HashMap<String, String> values, String file_name) throws IOException
+	public void writeToFile(ConcurrentHashMap<String, String> tagValues, String file_name) throws IOException
 	{
 		Writer writer = new BufferedWriter(new OutputStreamWriter(
 	              new FileOutputStream(file_name), "utf-8"));
-		for (HashMap.Entry<String,String> ent: values.entrySet()) {
+		tagValues.entrySet().parallelStream().forEach(ent -> {
+			try {
 				writer.write(ent.getKey() + ": " + ent.getValue() + "\n");
-		}
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, e.getMessage());
+		    	return;
+			}
+		});
 		writer.close();
 	}
 	
-	public HashMap<String, String> mapMatches(List<Matcher> matchers, HashMap<String, HashMap<WType, String>> reg_map) {
-		HashMap<String, String> mapped_values = new HashMap<String, String>();
-
-		for (Matcher matcher: matchers) {			
+	public ConcurrentHashMap<String, String> mapMatches(List<Matcher> matchers, ConcurrentHashMap<String, ConcurrentHashMap<WType, String>> reg_map) {
+		ConcurrentHashMap<String, String> mapped_values = new ConcurrentHashMap<String, String>();
+		matchers.parallelStream().forEach(matcher -> {
 			while (matcher.find()) {
 				String pattern = matcher.pattern().pattern();
 				String key = "";
-				for (HashMap.Entry<String, HashMap<WType, String>> ent: reg_map.entrySet()) {
-					HashMap<WType,String> reg_inner_map = (HashMap<WType, String>) ent.getValue();
+				
+				for (ConcurrentHashMap.Entry<String, ConcurrentHashMap<WType, String>> ent: reg_map.entrySet()) {
+					ConcurrentHashMap<WType,String> reg_inner_map = (ConcurrentHashMap<WType, String>) ent.getValue();
 					for(HashMap.Entry<WType, String> inner_ent: reg_inner_map.entrySet())
 					{
 				        if (Objects.equals(pattern, inner_ent.getValue().toString())) {
@@ -92,28 +148,30 @@ public class WeatherExtractor {
 			    }
 				if(!key.equals("") && !pattern.equals(""))	mapped_values.put(key, matcher.group(1));
 		    }
-		}
+		});
 		return mapped_values;
 	}
 	
 	public void parseDataFromHTML(String html, String site_name, CityConfig city) throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
-		HashMap<String, HashMap<WType,String>> reg_map = city.getSite_map();
-		HashMap<String, String> tagValues = new HashMap<String, String>();
+		ConcurrentHashMap<String, ConcurrentHashMap<WType,String>> reg_map = city.getSite_map();
+		ConcurrentHashMap<String, String> tagValues = new ConcurrentHashMap<String, String>();
 		final List<Matcher> matchers = new ArrayList<Matcher>();
 		
-		for(HashMap.Entry<String, HashMap<WType, String>> reg_entry:reg_map.entrySet()) {
+		
+		reg_map.entrySet().parallelStream().forEach((reg_entry) -> {
 			if(reg_entry.getKey().toString().equals(site_name))
 			{
-				HashMap<WType,String> reg_inner_map = (HashMap<WType, String>) reg_entry.getValue();
-				for(HashMap.Entry<WType, String> reg_inner_entry:reg_inner_map.entrySet())
-				{
+				ConcurrentHashMap<WType,String> reg_inner_map = (ConcurrentHashMap<WType, String>) reg_entry.getValue();
+				reg_inner_map.entrySet().parallelStream().forEach(reg_inner_entry -> {
 					String str_entry = reg_inner_entry.getValue().toString();
 					Pattern p_entry = Pattern.compile(str_entry, Pattern.DOTALL);
 					matchers.add(p_entry.matcher(html));
-				}
+				});
 			}
 		}
+		);
+		
 		
 		if(matchers != null) {
 			tagValues = mapMatches(matchers, reg_map);
@@ -165,10 +223,9 @@ public class WeatherExtractor {
 	
 	public static void printWeatherList(List<WeatherData> weather_list)
 	{
-		for (WeatherData weather: weather_list)
-		{
+		weather_list.forEach(weather -> {
 			System.out.println(weather.toString() + "\n");
-		}
+		});
 	}
 	
 	public List<WeatherData> getDataForCity(List<CityConfig> cities) {
@@ -177,36 +234,41 @@ public class WeatherExtractor {
 		List<WeatherData> weather_list = new ArrayList<WeatherData>();
 		
 		WeatherDeserializer weather_deserializer = new WeatherDeserializer();
-		WeatherData weather_data = new WeatherData();
 		
-		for(CityConfig city: cities)
-		{
-			HashMap<String,String> url_map = city.getUrl_map(); 
-				try {
-					retrieveUrlData(city);
-					for(HashMap.Entry<String, String> url_entry: url_map.entrySet())
+		Long timeStarted = System.currentTimeMillis();
+		cities.parallelStream().forEach(city -> {
+			WeatherData weather_data = new WeatherData();
+			ConcurrentHashMap<String,String> url_map = city.getUrl_map(); 
+			try {
+				retrieveUrlData(city);
+				for(HashMap.Entry<String, String> url_entry: url_map.entrySet())
+				{
+					for(String file: weather_file_names)
 					{
-						for(String file: weather_file_names)
+						if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()) && 
+								(!loaded_file_names.contains(file.toString())))
 						{
-							if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()) && 
-									(!loaded_file_names.contains(file.toString())))
-							{
-								weather_data = weather_deserializer.createWeatherData(file);
-								weather_list.add(weather_data);
-								loaded_file_names.add(file);
-							}
+							weather_data = weather_deserializer.createWeatherData(file);
+							weather_list.add(weather_data);
+							loaded_file_names.add(file);
 						}
 					}
-					
 				}
-				catch (MalformedURLException e) {
-					logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");
-					return null;
-				} catch (IOException e) {
-					logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect HTML format.");
-					return null;
-				}
-		}
+				
+			}
+			
+			
+			catch (MalformedURLException e) {
+				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");
+				return;
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect HTML format.");
+				return;
+			}
+		});
+		
+		System.out.println("Parallel stream query time: " + (System.currentTimeMillis() - timeStarted) + "ms");
+
 			return weather_list;
 		}
 		
