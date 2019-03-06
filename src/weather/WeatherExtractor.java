@@ -229,47 +229,28 @@ public class WeatherExtractor {
 	
 	public List<WeatherData> getDataForCity(List<CityConfig> cities) {
 		logger.info("Retrieving HTML data...");
-		
-		List<WeatherData> weather_list = new ArrayList<WeatherData>();
-		
-		WeatherDeserializer weather_deserializer = new WeatherDeserializer();
+		ExtractorService async_service = new ExtractorService();
 		
 		Long timeStarted = System.currentTimeMillis();
-		cities.forEach(city -> {
-			WeatherData weather_data = new WeatherData();
-			HashMap<String,String> url_map = city.getUrl_map(); 
-			try {
-				retrieveUrlData(city);
-				for(HashMap.Entry<String, String> url_entry: url_map.entrySet())
-				{
-					for(String file: weather_file_names)
-					{
-						if(file.toUpperCase().contains(((String) url_entry.getKey()).toUpperCase().toString()) && 
-								(!loaded_file_names.contains(file.toString())))
-						{
-							weather_data = weather_deserializer.createWeatherData(file);
-							weather_list.add(weather_data);
-							loaded_file_names.add(file);
-						}
-					}
-				}
-				
-			}
-			
-			
-			catch (MalformedURLException e) {
-				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect URL format.");
-				return;
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, this.getClass().getName().toString() + ": Incorrect HTML format.");
-				return;
-			}
-		});
+		for(CityConfig city: cities) {
+			async_service.runService(city);
+		}
 		
+		async_service.shutdownService();
 		System.out.println("Parallel stream query time: " + (System.currentTimeMillis() - timeStarted) + "ms");
 
-			return weather_list;
+		return async_service.getWeatherList();
+		
+		
 		}
+	
+	public Set<String> getWeatherFileNames() {
+		return weather_file_names;
+	}
+	
+	public Set<String> getLoadedFileNames() {
+		return loaded_file_names;
+	}
 		
 
 	}
