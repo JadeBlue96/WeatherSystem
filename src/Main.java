@@ -3,9 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.DBWeatherInserter;
 import db.DBWeatherRepository;
-import db.DBWeatherUpdater;
 import model.WeatherData;
 import property.CityConfig;
 import property.CityPropReader;
@@ -74,11 +72,11 @@ public class Main {
 			
 			DBWeatherRepository dbw_repos = new DBWeatherRepository(url, username, password);
 			dbw_repos.DBInsert(weather_list);
-			weather_list.get(0).setFeel_temp(666);
-			dbw_repos.DBUpdate(weather_list);
-			List<WeatherData> db_weather_list = dbw_repos.DBSelect();
-			dbw_repos.DBDelete(weather_list);
-			WeatherExtractor.printWeatherList(db_weather_list);
+			//weather_list.get(0).setFeel_temp(666);
+			//dbw_repos.DBUpdate(weather_list);
+			//List<WeatherData> db_weather_list = dbw_repos.DBSelect();
+			//dbw_repos.DBDelete(weather_list);
+			//WeatherExtractor.printWeatherList(db_weather_list);
 			dbw_repos.close();
 			
 		}
