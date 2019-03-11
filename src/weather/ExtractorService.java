@@ -18,7 +18,7 @@ import property.CityConfig;
 public class ExtractorService {
 	
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
-	private final static Integer NUM_THREADS = 5;
+	private final static Integer NUM_THREADS = 10;
 	private final static Integer MS_BEFORE_TERMINATION = 10000;
 	List<WeatherData> weather_list = new ArrayList<WeatherData>();
 	
