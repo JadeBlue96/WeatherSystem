@@ -1,61 +1,25 @@
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import db.DBWeatherRepository;
+import logging.PropLogger;
 import model.WeatherData;
 import property.CityConfig;
-import property.CityPropReader;
-import validation.IValidator;
+import validation.Validator;
 import weather.WeatherExtractor;
 
 public class Main {
 	
+	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	
-	public static List<CityConfig> getValidCities(boolean isXMLValidationType) throws ClassNotFoundException, InstantiationException, IllegalAccessException
+	public static void main(String[] args)
 	{
-		List<CityConfig> cities = new ArrayList<CityConfig>();
-		final Class<?> file_validator = Class.forName("validation.PropFileValidator");
-		final Class<?> obj_validator = Class.forName("validation.PropObjectValidator");
-		final Class<?> xml_validator = Class.forName("xml.XmlPropertyValidator");
-		IValidator validator;		
-		
-		if(!isXMLValidationType)
-		{
-			validator = (IValidator) file_validator.newInstance();
-			boolean isValidFile = false;
-			isValidFile = validator.validate();
-			if(isValidFile)
-			{
-				validator = (IValidator) obj_validator.newInstance();
-				validator.validate();
-				cities = validator.getValidCities(cities);
-				validator.printValidCities(cities);
-			}
-		}
-		else {
-			validator = (IValidator) xml_validator.newInstance();
-			boolean isValidXML = validator.validate();
-			if(isValidXML)
-			{
-				cities = xml.XmlPropertyParser.readXMLObjects();
-				if(cities != null)
-				{
-					validator.printValidCities(cities);
-				}
-			}
-		}
-		return cities;
-	}
-
-	
-
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
 		
 		List<CityConfig> cities = new ArrayList<CityConfig>();
 		boolean isXMLValidationType = false;
-		cities = getValidCities(isXMLValidationType);
+		cities = Validator.getValidCitiesByType(isXMLValidationType);
 		WeatherExtractor weather_extractor = new WeatherExtractor();
 		List<WeatherData> weather_list = weather_extractor.getDataForCity(cities);
 		WeatherExtractor.printWeatherList(weather_list);

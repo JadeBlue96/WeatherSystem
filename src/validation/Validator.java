@@ -3,13 +3,16 @@ package validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import logging.PropLogger;
 import property.CityConfig;
 import property.CityPropReader;
 
 public abstract class Validator {
 	
-	
+	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
 	private List<String> errorMessages = new ArrayList<String>();
 	private CityPropReader prop_reader;
 	private List<CityConfig> valid_cities = new ArrayList<CityConfig>();
@@ -88,6 +91,64 @@ public abstract class Validator {
     		System.out.println(city.ToString() + "\n");
     	}
     }
+    
+    public static List<CityConfig> getValidCitiesByType(boolean isXMLValidationType)
+	{
+		List<CityConfig> cities = new ArrayList<CityConfig>();
+		Class<?> file_validator;
+		
+		try 
+		{
+			file_validator = Class.forName("validation.PropFileValidator");
+			final Class<?> obj_validator = Class.forName("validation.PropObjectValidator");
+			final Class<?> xml_validator = Class.forName("validation.XmlPropertyValidator");
+		
+		IValidator validator;		
+		
+		if(!isXMLValidationType)
+		{
+			validator = (IValidator) file_validator.newInstance();
+			boolean isValidFile = false;
+			isValidFile = validator.validate();
+			if(isValidFile)
+			{
+				validator = (IValidator) obj_validator.newInstance();
+				validator.validate();
+				cities = validator.getValidCities(cities);
+				validator.printValidCities(cities);
+			}
+		}
+		else {
+			validator = (IValidator) xml_validator.newInstance();
+			boolean isValidXML = validator.validate();
+			if(isValidXML)
+			{
+				cities = xml.XmlPropertyParser.readXMLObjects();
+				if(cities != null)
+				{
+					validator.printValidCities(cities);
+				}
+			}
+		}
+		
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			logger.log(Level.SEVERE, "Incorrect validation class name.");
+			return null;
+		}
+		catch (InstantiationException e)
+		{
+			logger.log(Level.SEVERE, "Incorrect class instantiation.");
+			return null;
+		}
+		catch (IllegalAccessException e)
+		{
+			logger.log(Level.SEVERE, "Incorrect access to instantiated class.");
+			return null;
+		}
+		return cities;
+	}
     
 	public List<String> getValidationMessages() {
 		return errorMessages;

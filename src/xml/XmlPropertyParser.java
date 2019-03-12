@@ -176,7 +176,7 @@ public class XmlPropertyParser extends CityConfig {
 	public static List<CityConfig> readXMLObjects() {
 		List<CityConfig> cities = new ArrayList<CityConfig>();
 		XmlPropertyParser prop_parser = new XmlPropertyParser();
-		cities = prop_parser.readConfig("../resources/xml_configs/wdata.xml");
+		cities = prop_parser.readConfig("src/resources/xml_configs/wdata.xml");
 		return cities;
 	}
 	

@@ -11,5 +11,5 @@ public interface IValidator {
     
     public List<CityConfig> getValidCities(List<CityConfig> cities);
     public void printValidCities(List<CityConfig> cities);
-    
+
 }
