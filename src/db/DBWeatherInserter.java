@@ -39,24 +39,30 @@ public class DBWeatherInserter {
 	{
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) 
+			{
 	            pstmt.setDouble(1, weather_data.getWind_data().getWind_spd());
 	            pstmt.setString(2, weather_data.getWind_data().getWind_status());
 	            pstmt.setString(3, weather_data.getWind_data().getWind_direction());
 	 
 	            int affectedRows = pstmt.executeUpdate();
 	            if (affectedRows > 0) {
-	                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-	                    if (rs.next()) {
+	                try (ResultSet rs = pstmt.getGeneratedKeys()) 
+	                {
+	                    if (rs.next()) 
+	                    {
 	                        wind_id = rs.getLong("wind_id");
 	                    }
-	                } catch (SQLException ex) {
+	                } 
+	                catch (SQLException ex) 
+	                {
 	                	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	                	return null;
 	                }
 	            }
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
 	        } 
@@ -68,28 +74,36 @@ public class DBWeatherInserter {
 	{
 		if (weather_data != null)
 		{
-		 try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) {
-	       	 
-	            pstmt.setString(1, weather_data.getConfig_data().getCity());
+		 try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) 
+		 {
+	           	pstmt.setString(1, weather_data.getConfig_data().getCity());
 	            pstmt.setString(2, weather_data.getConfig_data().getCountry());
 	            pstmt.setString(3, weather_data.getConfig_data().getSite());
-	 
+
 	            int affectedRows = pstmt.executeUpdate();
-	            if (affectedRows > 0) {
-	                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-	                    if (rs.next()) {
+	            if (affectedRows > 0) 
+	            {
+	                try (ResultSet rs = pstmt.getGeneratedKeys()) 
+	                {
+	                    if (rs.next()) 
+	                    {
 	                    	config_id = rs.getLong("config_id");
 	                    }
-	                } catch (SQLException ex) {
+	                } 
+	                catch (SQLException ex) {
 	                	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	                	return null;
 	                }
 	            }
-	        } catch (SQLException ex) {
+	     } 
+		 catch (SQLException ex) 
+		 {
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
-	        } 
+	     } 
+		 
 		}
+		
 		 return config_id;
 	}
 	
@@ -97,41 +111,52 @@ public class DBWeatherInserter {
 	{
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) 
+			{
 	            if(weather_data.getAdditional_data().getHumidity() != null) 
 	            {
 	            	pstmt.setDouble(1, weather_data.getAdditional_data().getHumidity());
 	            }
-	            else {
+	            else 
+	            {
 	            	pstmt.setNull(1, Types.INTEGER);
 	            }
 	            if(weather_data.getAdditional_data().getVisibility() != null) 
 	            {
 	            	pstmt.setDouble(2, weather_data.getAdditional_data().getVisibility());
 	            }
-	            else {
+	            else 
+	            {
 	            	pstmt.setNull(2, Types.DOUBLE);
 	            }
-	            if(weather_data.getAdditional_data().getPressure() != null) {
+	            if(weather_data.getAdditional_data().getPressure() != null) 
+	            {
 	            	pstmt.setInt(3, weather_data.getAdditional_data().getPressure());
 	            }
-	            else {
+	            else 
+	            {
 	            	pstmt.setNull(3, Types.INTEGER);
 	            }
 	 
 	            int affectedRows = pstmt.executeUpdate();
-	            if (affectedRows > 0) {
-	                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-	                    if (rs.next()) {
+	            if (affectedRows > 0) 
+	            {
+	                try (ResultSet rs = pstmt.getGeneratedKeys()) 
+	                {
+	                    if (rs.next()) 
+	                    {
 	                        add_id = rs.getLong("add_id");
 	                    }
-	                } catch (SQLException ex) {
+	                } 
+	                catch (SQLException ex) 
+	                {
 	                	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	                	return null;
 	                }
 	            }
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
 	        } 
@@ -143,14 +168,15 @@ public class DBWeatherInserter {
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) {
-		       	 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) 
+			{
 	            pstmt.setInt(1, weather_data.getTemp());
 	            if(weather_data.getFeel_temp() != null) 
 	            {
 	            	pstmt.setInt(2, weather_data.getFeel_temp());
 	            }
-	            else {
+	            else 
+	            {
 	            	pstmt.setNull(2, Types.INTEGER);
 	            }
 	            pstmt.setString(3, weather_data.getStatus());
@@ -160,17 +186,24 @@ public class DBWeatherInserter {
 	            pstmt.setTimestamp(7, Timestamp.from(weather_data.getQuery_date().toInstant()));
 	 
 	            int affectedRows = pstmt.executeUpdate();
-	            if (affectedRows > 0) {
-	                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-	                    if (rs.next()) {
+	            if (affectedRows > 0) 
+	            {
+	                try (ResultSet rs = pstmt.getGeneratedKeys()) 
+	                {
+	                    if (rs.next()) 
+	                    {
 	                        weather_id = rs.getLong("weather_id");
 	                    }
-	                } catch (SQLException ex) {
+	                } 
+	                catch (SQLException ex) 
+	                {
 	                	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	                	return (Long) null;
 	                }
 	            }
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return (Long) null;
 	        }
@@ -184,6 +217,7 @@ public class DBWeatherInserter {
 		{
 			Long timeStarted = System.currentTimeMillis();
 			weather_list.parallelStream().forEach(weather_data -> {
+				
 				long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
 				wind_id = insertWind(SQL_INSERT_WIND, weather_data, wind_id);
 		        weather_data.getWind_data().setId(wind_id);

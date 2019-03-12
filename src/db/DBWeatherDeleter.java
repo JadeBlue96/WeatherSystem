@@ -32,13 +32,13 @@ DBConnector db = null;
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) 
+			{
 				pstmt.setLong(1, wind_id);
-	 
 	            affectedRows = pstmt.executeUpdate();
-	            
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return 0;
 	        } 
@@ -52,12 +52,13 @@ DBConnector db = null;
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) 
+			{
 				pstmt.setLong(1, config_id);
 	            affectedRows = pstmt.executeUpdate();
-	            
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return 0;
 	        } 
@@ -71,12 +72,13 @@ DBConnector db = null;
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) 
+			{
 				pstmt.setLong(1, add_id);
 	            affectedRows = pstmt.executeUpdate();
-	            
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return 0;
 	        } 
@@ -90,12 +92,13 @@ DBConnector db = null;
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) 
+			{
 				pstmt.setLong(1, weather_id);
 	            affectedRows = pstmt.executeUpdate();
-	            
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return 0;
 	        } 
@@ -107,12 +110,13 @@ DBConnector db = null;
 		
 		
 		long[] wind_upd = {0}, config_upd = {0}, weather_upd = {0}, add_upd = {0};
-		
-		
+
 		if (weather_list != null)
 		{
 			Long timeStarted = System.currentTimeMillis();
+			
 			weather_list.parallelStream().forEach(weather_data -> {
+				
 				long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
 				
 				wind_id = weather_data.getWind_data().getId();
@@ -124,6 +128,7 @@ DBConnector db = null;
 		        wind_upd[0] += deleteWind(SQL_DELETE_WIND, weather_data, wind_id);
 		        config_upd[0] += deleteConfig(SQL_DELETE_CONFIG, weather_data, config_id);
 		        add_upd[0] += deleteAdditional(SQL_DELETE_ADDITIONAL, weather_data, add_id);
+		        
 			});
 		
 			System.out.println("Parallel stream db delete time: " + (System.currentTimeMillis() - timeStarted) + "ms");

@@ -37,9 +37,11 @@ public class DBWeatherSelector {
 	{
 		List<Additional> add_list = new ArrayList<>();
 		Additional add_data = new Additional();
-		 try (Statement stmt = db.getConnection().createStatement()) {
+		 try (Statement stmt = db.getConnection().createStatement()) 
+		 {
 	        	ResultSet rs = stmt.executeQuery(SQL_SELECT_ADDITIONAL_ALL);
-	            while (rs.next()) {
+	            while (rs.next()) 
+	            {
 	            	Long id = rs.getLong("add_id");
 	                Integer humidity = rs.getInt("humidity");
 	                Double visibility = rs.getDouble("visibility");
@@ -47,10 +49,12 @@ public class DBWeatherSelector {
 	                add_data = new Additional(id, humidity, visibility, pressure);
 	                add_list.add(add_data);
 	            }
-	        } catch (SQLException e) {
-	        	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
-	            return null;
-	        }
+	     } 
+		 catch (SQLException e) 
+		 {
+	        logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
+	        return null;
+	     }
 		 return add_list;
 	}
 	
@@ -58,30 +62,36 @@ public class DBWeatherSelector {
 	{
 		List<ConfigData> conf_list = new ArrayList<>();
 		ConfigData conf_data = new ConfigData();
-		 try (Statement stmt = db.getConnection().createStatement()) {
-	        	ResultSet rs = stmt.executeQuery(SQL_SELECT_CONFIG_ALL);
-	            while (rs.next()) {
+		try (Statement stmt = db.getConnection().createStatement()) 
+		{
+	        ResultSet rs = stmt.executeQuery(SQL_SELECT_CONFIG_ALL);
+	        while (rs.next())
+	        {
 	            	Long id = rs.getLong("config_id");
 	                String city = rs.getString("city");
 	                String country = rs.getString("country");
 	                String site = rs.getString("site");
 	                conf_data = new ConfigData(id, city, country, site);
 	                conf_list.add(conf_data);
-	            }
-	        } catch (SQLException e) {
-	        	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
-	            return null;
 	        }
-		 return conf_list;
+	    } 
+		catch (SQLException e) 
+		{
+	       logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
+	       return null;
+	    }
+		return conf_list;
 	}
 	
 	public List<Wind> getWindData()
 	{
 		List<Wind> wind_list = new ArrayList<>();
 		Wind wind_data = new Wind();
-		 try (Statement stmt = db.getConnection().createStatement()) {
+		try (Statement stmt = db.getConnection().createStatement()) 
+		{
 	        	ResultSet rs = stmt.executeQuery(SQL_SELECT_WIND_ALL);
-	            while (rs.next()) {
+	            while (rs.next()) 
+	            {
 	            	Long id = rs.getLong("wind_id");
 	                Double wind_spd = rs.getDouble("wind_spd");
 	                String wind_status = rs.getString("wind_status");
@@ -89,19 +99,23 @@ public class DBWeatherSelector {
 	                wind_data = new Wind(id, wind_spd, wind_status, wind_direction);
 	                wind_list.add(wind_data);
 	            }
-	        } catch (SQLException e) {
-	        	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
-	            return null;
-	        }
-		 return wind_list;
+	    }
+		catch (SQLException e) 
+		{
+	        logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
+	        return null;
+	    }
+		return wind_list;
 	}
 	
 	public List<WeatherData> getWeatherData()
 	{
 		List<WeatherData> weather_dblist = new ArrayList<>();
-		try (Statement stmt = db.getConnection().createStatement()) {
+		try (Statement stmt = db.getConnection().createStatement()) 
+		{
         	ResultSet rs = stmt.executeQuery(SQL_SELECT_WEATHER_ALL);
-            while (rs.next()) {
+            while (rs.next()) 
+            {
             	Long id = rs.getLong("weather_id");
                 Integer temp = rs.getInt("temp");
                 Integer feel_temp = rs.getInt("feel_temp");
@@ -114,11 +128,13 @@ public class DBWeatherSelector {
                 WeatherData db_weather_data = new WeatherData(id, temp, feel_temp, status,weather_add_id, weather_config_id, weather_wind_id, query_date);
                 weather_dblist.add(db_weather_data);
             }
-        } catch (SQLException e) {
+        } 
+		catch (SQLException e) 
+		{
         	logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + e.getMessage());
             return null;
         }
-		 return weather_dblist;
+		return weather_dblist;
 	}
 
 	public List<WeatherData> DBOToModelObjects() {

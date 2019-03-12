@@ -19,8 +19,8 @@ public class DBConnector {
 		Properties properties = new Properties();
 		properties.setProperty( "user", user );
 		properties.setProperty( "password", pw );
-		if( ssl ) properties.setProperty( "ssl", "true" );
-		
+		if(ssl) properties.setProperty( "ssl", "true" );
+
 		try 
 		{
 			conn = DriverManager.getConnection( dbUrl, properties );

@@ -33,8 +33,8 @@ public class DBWeatherUpdater {
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) {
-				 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WIND,Statement.RETURN_GENERATED_KEYS)) 
+			{				 
 	            pstmt.setDouble(1, weather_data.getWind_data().getWind_spd());
 	            pstmt.setString(2, weather_data.getWind_data().getWind_status());
 	            pstmt.setString(3, weather_data.getWind_data().getWind_direction());
@@ -42,7 +42,9 @@ public class DBWeatherUpdater {
 	 
 	            affectedRows = pstmt.executeUpdate();
 	            
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
 	        } 
@@ -56,20 +58,23 @@ public class DBWeatherUpdater {
 		
 		if (weather_data != null)
 		{
-		 try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) {
-	       	 
+		 try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_CONFIG,Statement.RETURN_GENERATED_KEYS)) 
+		 {  	 
 	            pstmt.setString(1, weather_data.getConfig_data().getCity());
 	            pstmt.setString(2, weather_data.getConfig_data().getCountry());
 	            pstmt.setString(3, weather_data.getConfig_data().getSite());
 	            pstmt.setLong(4, config_id);
 	 
 	            affectedRows = pstmt.executeUpdate();
-	        } catch (SQLException ex) {
+	     } 
+		 catch (SQLException ex) 
+		 {
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
-	        } 
+	     }
 		}
-		 return affectedRows;
+		
+		return affectedRows;
 	}
 	
 	public Long updateAdditional(String SQL_ADD, WeatherData weather_data, Long add_id)
@@ -77,31 +82,39 @@ public class DBWeatherUpdater {
 		long affectedRows = 0;
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) {
-				 
-				if(weather_data.getAdditional_data().getHumidity() != null) {
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_ADD,Statement.RETURN_GENERATED_KEYS)) 
+			{
+			 
+				if(weather_data.getAdditional_data().getHumidity() != null) 
+				{
 					pstmt.setDouble(1, weather_data.getAdditional_data().getHumidity());
 				}
-				else {
+				else 
+				{
 					pstmt.setNull(1, Types.INTEGER);
 				}
-				if(weather_data.getAdditional_data().getVisibility() != null) {
+				if(weather_data.getAdditional_data().getVisibility() != null) 
+				{
 					pstmt.setDouble(2, weather_data.getAdditional_data().getVisibility());
 				}
-				else {
+				else 
+				{
 					pstmt.setNull(2, Types.DOUBLE);
 				}
 				if(weather_data.getAdditional_data().getPressure() != null) 
 				{
 					pstmt.setInt(3, weather_data.getAdditional_data().getPressure());
 				}
-				else {
+				else 
+				{
 					pstmt.setNull(3, Types.INTEGER);
 				}
 	            pstmt.setLong(4, add_id);
 	 
 	            affectedRows = pstmt.executeUpdate();
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
 	        } 
@@ -114,14 +127,15 @@ public class DBWeatherUpdater {
 		
 		if (weather_data != null)
 		{
-			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) {
-		       	 
+			try (PreparedStatement pstmt = db.getConnection().prepareStatement(SQL_WEATHER,Statement.RETURN_GENERATED_KEYS)) 
+			{ 	 
 	            pstmt.setInt(1, weather_data.getTemp());
 	            if(weather_data.getFeel_temp() != null) 
 				{
 					pstmt.setInt(2, weather_data.getFeel_temp());
 				}
-				else {
+				else 
+				{
 					pstmt.setNull(2, Types.INTEGER);
 				}
 	            pstmt.setString(3, weather_data.getStatus());
@@ -132,7 +146,9 @@ public class DBWeatherUpdater {
 	 
 	            affectedRows = pstmt.executeUpdate();
 	
-	        } catch (SQLException ex) {
+	        } 
+			catch (SQLException ex) 
+			{
 	            logger.log(Level.SEVERE, this.getClass().getName().toString() + ": " + ex.getMessage());
 	            return null;
 	        }
