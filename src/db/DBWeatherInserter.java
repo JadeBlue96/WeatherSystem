@@ -216,8 +216,9 @@ public class DBWeatherInserter {
 		if (weather_list != null)
 		{
 			Long timeStarted = System.currentTimeMillis();
+			
 			weather_list.parallelStream().forEach(weather_data -> {
-				
+
 				long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
 				wind_id = insertWind(SQL_INSERT_WIND, weather_data, wind_id);
 		        weather_data.getWind_data().setId(wind_id);
@@ -229,6 +230,7 @@ public class DBWeatherInserter {
 		        weather_data.setId(weather_id);
 			         
 			    if(weather_id > 0)    logger.info(this.getClass().getName().toString() + ": ID: " + weather_id + " Data inserted successfully."); 
+			    
 			});
 			
 			System.out.println("Parallel stream db insert time: " + (System.currentTimeMillis() - timeStarted) + "ms");

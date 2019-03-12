@@ -8,22 +8,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import logging.PropLogger;
+import property.CityPropReader;
 
 public class DBConnector {
+	
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
+	private static DBConnector db_inst = new DBConnector();
 
 	private Connection conn = null;
 	
-	public DBConnector(String dbUrl, String user, String pw, boolean ssl) 
+	private DBConnector() 
 	{
 		Properties properties = new Properties();
-		properties.setProperty( "user", user );
-		properties.setProperty( "password", pw );
-		if(ssl) properties.setProperty( "ssl", "true" );
+		CityPropReader db_credentials = new CityPropReader("../resources/db_credentials/db_cred.properties");
+		final String username = db_credentials.getPropertyValue("username");
+		final String password = db_credentials.getPropertyValue("password");
+		final String url = db_credentials.getPropertyValue("url");
+		
+		properties.setProperty("user", username );
+		properties.setProperty("password", password );
 
 		try 
 		{
-			conn = DriverManager.getConnection( dbUrl, properties );
+			conn = DriverManager.getConnection(url, properties);
 		}
 		catch (SQLException e) 
 		{
@@ -35,6 +42,16 @@ public class DBConnector {
 	public Connection getConnection()
 	{
 		return conn;
+	}
+	
+	// for thread-safe CRUD operations
+	public static synchronized DBConnector getInstance() 
+	{
+		if(db_inst == null)
+		{
+			db_inst = new DBConnector();
+		}
+		return db_inst;
 	}
 	
 	public void close() 

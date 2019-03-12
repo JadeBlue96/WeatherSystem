@@ -1,5 +1,6 @@
 package db;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -7,13 +8,17 @@ import logging.PropLogger;
 import model.WeatherData;
 
 public class DBWeatherRepository implements IWeatherRepository{
-	DBConnector db = null;
+	
 	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
+	private final static DBConnector db = DBConnector.getInstance();
     
-	public DBWeatherRepository(String url, String user, String pw)
+	public DBWeatherRepository()
 	{
-		db = new DBConnector( url, user, pw, false );
-		logger.info(this.getClass().getName() + ": Connection to database successful.");
+		Connection db_conn = db.getConnection();
+		if(db_conn != null)
+		{
+			logger.info(this.getClass().getName() + ": Connection to database successful.");
+		}
 	}
 	
 	public List<WeatherData> DBSelect()
@@ -37,7 +42,7 @@ public class DBWeatherRepository implements IWeatherRepository{
 	
 	public void DBInsert(List<WeatherData> weather_list)
 	{
-		DBWeatherInserter dbw_ins = new DBWeatherInserter(db);
+		DBWeatherInserter dbw_ins = new DBWeatherInserter(DBConnector.getInstance());
 		dbw_ins.insertWeatherList(weather_list);
 	}
 	
