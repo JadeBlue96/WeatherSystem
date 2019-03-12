@@ -7,24 +7,24 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class PropLogger {
-	
-	private static FileHandler fh = null;
-	public static void initLogger()
-	{
-		try {
-			 fh = new FileHandler("src/resources/logs/prop_val.log", false); //set path for log file
-			 } catch (SecurityException | IOException e) {
-			 e.printStackTrace();
-			 }
-		 Logger l = Logger.getLogger("");
-		 fh.setFormatter(new SimpleFormatter());
-		 l.addHandler(fh);
-		 l.setLevel(Level.CONFIG);
-	}
-	
-	public static void closeHandler()
-	{
-		fh.close();
-	}
-	
+    
+    private static FileHandler fh = null;
+    public static void initLogger()
+    {
+        try {
+             fh = new FileHandler("src/resources/logs/prop_val.log", false); //set path for log file
+             } catch (SecurityException | IOException e) {
+             e.printStackTrace();
+             }
+         Logger l = Logger.getLogger("");
+         fh.setFormatter(new SimpleFormatter());
+         l.addHandler(fh);
+         l.setLevel(Level.CONFIG);
+    }
+    
+    public static void closeHandler()
+    {
+        fh.close();
+    }
+    
 }

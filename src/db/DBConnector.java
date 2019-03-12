@@ -11,63 +11,63 @@ import logging.PropLogger;
 import property.CityPropReader;
 
 public class DBConnector {
-	
-	private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
-	private static DBConnector db_inst = new DBConnector();
+    
+    private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
+    private static DBConnector db_inst = new DBConnector();
 
-	private Connection conn = null;
-	
-	private DBConnector() 
-	{
-		Properties properties = new Properties();
-		CityPropReader db_credentials = new CityPropReader("../resources/db_credentials/db_cred.properties");
-		final String username = db_credentials.getPropertyValue("username");
-		final String password = db_credentials.getPropertyValue("password");
-		final String url = db_credentials.getPropertyValue("url");
-		
-		properties.setProperty("user", username );
-		properties.setProperty("password", password );
+    private Connection conn = null;
+    
+    private DBConnector() 
+    {
+        Properties properties = new Properties();
+        CityPropReader db_credentials = new CityPropReader("../resources/db_credentials/db_cred.properties");
+        final String username = db_credentials.getPropertyValue("username");
+        final String password = db_credentials.getPropertyValue("password");
+        final String url = db_credentials.getPropertyValue("url");
+        
+        properties.setProperty("user", username );
+        properties.setProperty("password", password );
 
-		try 
-		{
-			conn = DriverManager.getConnection(url, properties);
-		}
-		catch (SQLException e) 
-		{
-			logger.log(Level.SEVERE, this.getClass().getName() + "Failed to establish connection to database.");
-			return;
-		}
-	}
-	
-	public Connection getConnection()
-	{
-		return conn;
-	}
-	
-	// for thread-safe CRUD operations
-	public static synchronized DBConnector getInstance() 
-	{
-		if(db_inst == null)
-		{
-			db_inst = new DBConnector();
-		}
-		return db_inst;
-	}
-	
-	public void close() 
-	{	
-		try
-		{
-			if( conn != null )
-			{
-				conn.close();
-			}
-		}
-		catch (SQLException e) 
-		{
-			logger.log(Level.SEVERE, this.getClass().getName() + "Error during closing connection to database.");
-			return;
-		}
-	}
-		
+        try 
+        {
+            conn = DriverManager.getConnection(url, properties);
+        }
+        catch (SQLException e) 
+        {
+            logger.log(Level.SEVERE, this.getClass().getName() + "Failed to establish connection to database.");
+            return;
+        }
+    }
+    
+    public Connection getConnection()
+    {
+        return conn;
+    }
+    
+    // for thread-safe CRUD operations
+    public static synchronized DBConnector getInstance() 
+    {
+        if(db_inst == null)
+        {
+            db_inst = new DBConnector();
+        }
+        return db_inst;
+    }
+    
+    public void close() 
+    {    
+        try
+        {
+            if( conn != null )
+            {
+                conn.close();
+            }
+        }
+        catch (SQLException e) 
+        {
+            logger.log(Level.SEVERE, this.getClass().getName() + "Error during closing connection to database.");
+            return;
+        }
+    }
+        
 }
