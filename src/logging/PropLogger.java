@@ -12,7 +12,7 @@ public class PropLogger {
     public static void initLogger()
     {
         try {
-             fh = new FileHandler("src/resources/logs/prop_val.log", false); //set path for log file
+             fh = new FileHandler("src/resources/logs/prop_val.log", true); //set path for log file
              } catch (SecurityException | IOException e) {
              e.printStackTrace();
              }

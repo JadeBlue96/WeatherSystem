@@ -22,7 +22,7 @@ public class UrlValidator {
             //URLConnection conn = url.openConnection();
             //conn.connect();
             logger.info("Validation complete for "+ str_url);
-            PropLogger.closeHandler();
+            //PropLogger.closeHandler();
             return true;
         }
         catch (URISyntaxException exception) {

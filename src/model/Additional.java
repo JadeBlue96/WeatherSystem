@@ -1,7 +1,7 @@
 package model;
 
 public class Additional {
-    private Long id;
+    private long id;
     private Integer humidity;
     private Double visibility;
     private Integer pressure;
