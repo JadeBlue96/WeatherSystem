@@ -13,7 +13,7 @@ import property.CityPropReader;
 public class DBConnector {
     
     private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
-    private static DBConnector db_inst = new DBConnector();
+    private static volatile DBConnector db_inst = new DBConnector();
 
     private Connection conn = null;
     
@@ -45,11 +45,17 @@ public class DBConnector {
     }
     
     // for thread-safe CRUD operations
-    public static synchronized DBConnector getInstance() 
+    public static DBConnector getInstance() 
     {
         if(db_inst == null)
         {
-            db_inst = new DBConnector();
+            synchronized (DBConnector.class)
+            {
+                if(db_inst == null)
+                {
+                    db_inst = new DBConnector();
+                }
+            }
         }
         return db_inst;
     }
