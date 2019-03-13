@@ -27,7 +27,7 @@ public class DBWeatherUpdater {
         this.db = db;
     }
     
-    public Long updateWind(String SQL_WIND, WeatherData weather_data, Long wind_id)
+    public Long updateWind(String SQL_WIND, WeatherData weather_data, long wind_id)
     {
         long affectedRows = 0;
         
@@ -52,7 +52,7 @@ public class DBWeatherUpdater {
         return affectedRows;
     }
     
-    public Long updateConfig(String SQL_CONFIG, WeatherData weather_data, Long config_id)
+    public Long updateConfig(String SQL_CONFIG, WeatherData weather_data, long config_id)
     {
         long affectedRows = 0;
         
@@ -77,7 +77,7 @@ public class DBWeatherUpdater {
         return affectedRows;
     }
     
-    public Long updateAdditional(String SQL_ADD, WeatherData weather_data, Long add_id)
+    public Long updateAdditional(String SQL_ADD, WeatherData weather_data, long add_id)
     {
         long affectedRows = 0;
         if (weather_data != null)
@@ -122,7 +122,7 @@ public class DBWeatherUpdater {
         return affectedRows;
     }
     
-    public Long updateWeather(String SQL_WEATHER, WeatherData weather_data, Long weather_id, Long add_id, Long config_id, Long wind_id) {
+    public Long updateWeather(String SQL_WEATHER, WeatherData weather_data, long weather_id, long add_id, long config_id, long wind_id) {
         long affectedRows = 0;
         
         if (weather_data != null)

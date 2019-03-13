@@ -6,22 +6,22 @@ import java.util.Date;
 
 public class WeatherData {
     
-    private Long id;
-    private Integer temp;
-    private Integer feel_temp;
+    private long id;
+    private int temp;
+    private int feel_temp;
     private String status;
     private Wind wind_data;
     private Additional additional_data;
     private ConfigData config_data;
     private Timestamp query_date;
     
-    private Long weather_add_id;
-    private Long weather_config_id;
-    private Long weather_wind_id;
+    private long weather_add_id;
+    private long weather_config_id;
+    private long weather_wind_id;
     
     public WeatherData() {
         temp = 0;
-        feel_temp = null;
+        feel_temp = 0;
         status = "";
         wind_data = new Wind();
         additional_data = new Additional();
@@ -29,7 +29,7 @@ public class WeatherData {
         weather_add_id = weather_config_id = weather_wind_id = (long) 0;
         query_date = null;
     }
-    public WeatherData(Integer temp, Integer feel_temp, String status, Wind wind_data, 
+    public WeatherData(int temp, int feel_temp, String status, Wind wind_data, 
             Additional additional_data, ConfigData config_data, Timestamp query_date) {
         this.temp = temp;
         this.status = status;
@@ -38,8 +38,8 @@ public class WeatherData {
         this.setConfig_data(config_data);
         this.query_date = query_date;
     }
-    public WeatherData(Long id,Integer temp, Integer feel_temp, String status,
-            Long weather_add_id, Long weather_config_id, Long weather_wind_id, Timestamp query_date) {
+    public WeatherData(long id, int temp, int feel_temp, String status,
+            long weather_add_id, long weather_config_id, long weather_wind_id, Timestamp query_date) {
         this.id = id;
         this.temp = temp;
         this.feel_temp = feel_temp;
@@ -64,7 +64,7 @@ public class WeatherData {
     public Integer getTemp() {
         return temp;
     }
-    public void setTemp(Integer temp) {
+    public void setTemp(int temp) {
         this.temp = temp;
     }
     public String getStatus() {
@@ -81,7 +81,7 @@ public class WeatherData {
     public Integer getFeel_temp() {
         return feel_temp;
     }
-    public void setFeel_temp(Integer feel_temp) {
+    public void setFeel_temp(int feel_temp) {
         this.feel_temp = feel_temp;
     }
     public ConfigData getConfig_data() {
@@ -90,20 +90,20 @@ public class WeatherData {
     public void setConfig_data(ConfigData config_data) {
         this.config_data = config_data;
     }
-    public void setId(Long id)
+    public void setId(long id)
     {
         this.id = id;
     }
-    public Long getId() {
+    public long getId() {
         return id;
     }
-    public Long getWeather_config_id() {
+    public long getWeather_config_id() {
         return weather_config_id;
     }
-    public Long getWeather_add_id() {
+    public long getWeather_add_id() {
         return weather_add_id;
     }
-    public Long getWeather_wind_id() {
+    public long getWeather_wind_id() {
         return weather_wind_id;
     }
     public Timestamp getQuery_date() {

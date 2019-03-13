@@ -42,10 +42,10 @@ public class DBWeatherSelector {
                 ResultSet rs = stmt.executeQuery(SQL_SELECT_ADDITIONAL_ALL);
                 while (rs.next()) 
                 {
-                    Long id = rs.getLong("add_id");
-                    Integer humidity = rs.getInt("humidity");
-                    Double visibility = rs.getDouble("visibility");
-                    Integer pressure = rs.getInt("pressure");
+                    long id = rs.getLong("add_id");
+                    int humidity = rs.getInt("humidity");
+                    double visibility = rs.getDouble("visibility");
+                    int pressure = rs.getInt("pressure");
                     add_data = new Additional(id, humidity, visibility, pressure);
                     add_list.add(add_data);
                 }
@@ -67,7 +67,7 @@ public class DBWeatherSelector {
             ResultSet rs = stmt.executeQuery(SQL_SELECT_CONFIG_ALL);
             while (rs.next())
             {
-                    Long id = rs.getLong("config_id");
+                    long id = rs.getLong("config_id");
                     String city = rs.getString("city");
                     String country = rs.getString("country");
                     String site = rs.getString("site");
@@ -92,8 +92,8 @@ public class DBWeatherSelector {
                 ResultSet rs = stmt.executeQuery(SQL_SELECT_WIND_ALL);
                 while (rs.next()) 
                 {
-                    Long id = rs.getLong("wind_id");
-                    Double wind_spd = rs.getDouble("wind_spd");
+                    long id = rs.getLong("wind_id");
+                    double wind_spd = rs.getDouble("wind_spd");
                     String wind_status = rs.getString("wind_status");
                     String wind_direction = rs.getString("wind_direction");
                     wind_data = new Wind(id, wind_spd, wind_status, wind_direction);
@@ -116,13 +116,13 @@ public class DBWeatherSelector {
             ResultSet rs = stmt.executeQuery(SQL_SELECT_WEATHER_ALL);
             while (rs.next()) 
             {
-                Long id = rs.getLong("weather_id");
-                Integer temp = rs.getInt("temp");
-                Integer feel_temp = rs.getInt("feel_temp");
+                long id = rs.getLong("weather_id");
+                int temp = rs.getInt("temp");
+                int feel_temp = rs.getInt("feel_temp");
                 String status = rs.getString("status");
-                Long weather_add_id = rs.getLong("weather_add_id");
-                Long weather_config_id = rs.getLong("weather_config_id");
-                Long weather_wind_id = rs.getLong("weather_wind_id");
+                long weather_add_id = rs.getLong("weather_add_id");
+                long weather_config_id = rs.getLong("weather_config_id");
+                long weather_wind_id = rs.getLong("weather_wind_id");
                 Timestamp query_date = rs.getTimestamp("query_date");
                 
                 WeatherData db_weather_data = new WeatherData(id, temp, feel_temp, status,weather_add_id, weather_config_id, weather_wind_id, query_date);

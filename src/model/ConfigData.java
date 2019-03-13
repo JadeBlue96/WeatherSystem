@@ -2,7 +2,7 @@ package model;
 
 public class ConfigData {
     
-    private Long id;
+    private long id;
     private String city;
     private String country;
     private String site;
@@ -16,7 +16,7 @@ public class ConfigData {
         this.country = country;
         this.site = site;
     }
-    public ConfigData(Long id, String city, String country, String site)
+    public ConfigData(long id, String city, String country, String site)
     {
         this.id = id;
         this.city = city;
@@ -45,7 +45,7 @@ public class ConfigData {
     public String toString() {
         return "ConfigData [city=" + city + ", country=" + country + ", site=" + site + "]";
     }
-    public void setId(Long id)
+    public void setId(long id)
     {
         this.id = id;
     }

@@ -26,7 +26,7 @@ DBConnector db = null;
         this.db = db;
     }
     
-    public int deleteWind(String SQL_WIND, WeatherData weather_data, Long wind_id)
+    public int deleteWind(String SQL_WIND, WeatherData weather_data, long wind_id)
     {
         int affectedRows = 0;
         
@@ -46,7 +46,7 @@ DBConnector db = null;
         return affectedRows;
     }
     
-    public int deleteConfig(String SQL_CONFIG, WeatherData weather_data, Long config_id)
+    public int deleteConfig(String SQL_CONFIG, WeatherData weather_data, long config_id)
     {
         int affectedRows = 0;
         
@@ -66,7 +66,7 @@ DBConnector db = null;
         return affectedRows;
     }
     
-    public int deleteAdditional(String SQL_ADD, WeatherData weather_data, Long add_id)
+    public int deleteAdditional(String SQL_ADD, WeatherData weather_data, long add_id)
     {
         int affectedRows = 0;
         
@@ -86,7 +86,7 @@ DBConnector db = null;
         return affectedRows;
     }
     
-    public int deleteWeather(String SQL_WEATHER, WeatherData weather_data, Long weather_id, Long add_id, Long config_id, Long wind_id) {
+    public int deleteWeather(String SQL_WEATHER, WeatherData weather_data, long weather_id, long add_id, long config_id, long wind_id) {
         
         int affectedRows = 0;
         

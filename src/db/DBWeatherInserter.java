@@ -1,13 +1,11 @@
 package db;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.Instant;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +33,7 @@ public class DBWeatherInserter {
         this.db = db;
     }
     
-    public Long insertWind(String SQL_WIND, WeatherData weather_data, Long wind_id)
+    public Long insertWind(String SQL_WIND, WeatherData weather_data, long wind_id)
     {
         if (weather_data != null)
         {
@@ -70,7 +68,7 @@ public class DBWeatherInserter {
         return wind_id;
     }
     
-    public Long insertConfig(String SQL_CONFIG, WeatherData weather_data, Long config_id)
+    public Long insertConfig(String SQL_CONFIG, WeatherData weather_data, long config_id)
     {
         if (weather_data != null)
         {
@@ -107,7 +105,7 @@ public class DBWeatherInserter {
          return config_id;
     }
     
-    public Long insertAdditional(String SQL_ADD, WeatherData weather_data, Long add_id)
+    public Long insertAdditional(String SQL_ADD, WeatherData weather_data, long add_id)
     {
         if (weather_data != null)
         {
@@ -164,7 +162,7 @@ public class DBWeatherInserter {
         return add_id;
     }
     
-    public Long insertWeather(String SQL_WEATHER, WeatherData weather_data, Long weather_id, Long add_id, Long config_id, Long wind_id) {
+    public Long insertWeather(String SQL_WEATHER, WeatherData weather_data, long weather_id, long add_id, long config_id, long wind_id) {
         
         if (weather_data != null)
         {

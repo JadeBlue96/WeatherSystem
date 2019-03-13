@@ -1,8 +1,8 @@
 package model;
 
 public class Wind {
-    private Long id;
-    private Double wind_spd;
+    private long id;
+    private double wind_spd;
     private String wind_status;
     private String wind_direction;
     
@@ -10,12 +10,12 @@ public class Wind {
         wind_spd = 0.0;
         wind_status = wind_direction = "";
     }
-    public Wind(Double wind_spd, String wind_status, String wind_direction) {
+    public Wind(double wind_spd, String wind_status, String wind_direction) {
         this.wind_spd = wind_spd;
         this.wind_status = wind_status;
         this.wind_direction = wind_direction;
     }
-    public Wind(Long id,Double wind_spd, String wind_status, String wind_direction) {
+    public Wind(long id, double wind_spd, String wind_status, String wind_direction) {
         this.id = id;
         this.wind_spd = wind_spd;
         this.wind_status = wind_status;
@@ -24,7 +24,7 @@ public class Wind {
     public Double getWind_spd() {
         return wind_spd;
     }
-    public void setWind_spd(Double wind_spd) {
+    public void setWind_spd(double wind_spd) {
         this.wind_spd = wind_spd;
     }
     public String getWind_status() {
@@ -47,7 +47,7 @@ public class Wind {
     public Long getId() {
         return id;
     }
-    public void setId(Long id)
+    public void setId(long id)
     {
         this.id = id;
     }
