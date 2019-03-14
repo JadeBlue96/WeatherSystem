@@ -4,6 +4,11 @@ import java.util.List;
 
 import property.CityConfig;
 
+/*
+ * Initiates the proper validation function depending on the validation level - property file, object or xml file.
+ * Retrieves and prints the valid rows from the configuration and creates configuration objects.
+ * Returns information about the incorrect data in the configuration.
+ */
 public interface IValidator {
     
     public boolean validate();
