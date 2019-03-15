@@ -11,12 +11,12 @@ import java.util.Set;
 public class SequentialProperties extends Properties {
 
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private Map<Object, Object> linkMap = new LinkedHashMap<Object,Object>();
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+    private Map<Object, Object> linkMap = new LinkedHashMap<Object,Object>();
 
     public void clear(){
         linkMap.clear();
@@ -30,10 +30,10 @@ public class SequentialProperties extends Properties {
     public boolean containsValue(Object value){
         return linkMap.containsValue(value);
     }
-	public Enumeration<Object> elements(){
+    public Enumeration<Object> elements(){
         throw new RuntimeException("Method elements is not supported in LinkedProperties class");
     }
-	public Set<java.util.Map.Entry<Object, Object>> entrySet(){
+    public Set<java.util.Map.Entry<Object, Object>> entrySet(){
         return linkMap.entrySet();
     }
     public boolean equals(Object o){

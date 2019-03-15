@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<weather xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="wdata.xsd">
+<weather xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="wdata.xsd">
 
 	<city name="Varna">
 		<country>BG</country>
@@ -37,7 +38,7 @@
 			</regex>
 		</site>
 	</city>
-	
+
 	<city name="Burgas">
 		<country>BG</country>
 		<site name="Dalivali">
@@ -61,7 +62,7 @@
 			</regex>
 		</site>
 	</city>
-	
+
 	<city name="Sofia">
 		<country>BG</country>
 		<site name="Sinoptik">
@@ -86,5 +87,5 @@
 			</regex>
 		</site>
 	</city>
-	
+
 </weather>

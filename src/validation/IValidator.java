@@ -10,11 +10,11 @@ import property.CityConfig;
  * Returns information about the incorrect data in the configuration.
  */
 public interface IValidator {
-	
-	public boolean validate();
+    
+    public boolean validate();
     public List<String> getValidationMessages();
     
     public List<CityConfig> getValidCities(List<CityConfig> cities);
     public void printValidCities(List<CityConfig> cities);
-    
+
 }
