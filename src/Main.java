@@ -3,9 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.DBWeatherInserter;
 import db.DBWeatherRepository;
-import db.DBWeatherUpdater;
 import model.WeatherData;
 import property.CityConfig;
 import property.CityPropReader;
