@@ -4,10 +4,9 @@ import java.util.List;
 
 import model.WeatherData;
 
-
 /*
-* Database CRUD operations and connection management.
-*/
+ * Database CRUD operations and connection management.
+ */
 public interface IWeatherRepository {
     
     /*
