@@ -2,7 +2,7 @@ package com.isoft.base.db;
 
 import java.util.List;
 
-import com.isoft.base.model.WeatherData;
+import com.isoft.base.db.model.WeatherData;
 
 /*
  * Database CRUD operations and connection management.

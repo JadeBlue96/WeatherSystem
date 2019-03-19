@@ -2,7 +2,7 @@ package com.isoft.base.weather;
 
 import java.util.List;
 
-import com.isoft.base.model.WeatherData;
+import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.property.CityConfig;
 
 /*

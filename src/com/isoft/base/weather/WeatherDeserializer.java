@@ -9,11 +9,11 @@ import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.isoft.base.db.model.Additional;
+import com.isoft.base.db.model.ConfigData;
+import com.isoft.base.db.model.WeatherData;
+import com.isoft.base.db.model.Wind;
 import com.isoft.base.logging.PropLogger;
-import com.isoft.base.model.Additional;
-import com.isoft.base.model.ConfigData;
-import com.isoft.base.model.WeatherData;
-import com.isoft.base.model.Wind;
 
 public class WeatherDeserializer {
     

@@ -1,4 +1,4 @@
-package com.isoft.base.model;
+package com.isoft.base.db.model;
 
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;

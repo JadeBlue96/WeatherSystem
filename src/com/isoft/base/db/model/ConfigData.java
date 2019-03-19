@@ -1,4 +1,4 @@
-package com.isoft.base.model;
+package com.isoft.base.db.model;
 
 public class ConfigData {
     

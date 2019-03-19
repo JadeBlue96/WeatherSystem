@@ -27,8 +27,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.logging.PropLogger;
-import com.isoft.base.model.WeatherData;
 import com.isoft.base.property.CityConfig;
 
 public class WeatherExtractor {
@@ -222,9 +222,13 @@ public class WeatherExtractor {
     
     public static void printWeatherList(List<WeatherData> weather_list)
     {
-        weather_list.forEach(weather -> {
-            System.out.println(weather.toString() + "\n");
-        });
+        if(weather_list != null)
+        {
+            for(WeatherData weather_data: weather_list)
+            {
+                if(weather_data != null)    System.out.println(weather_data.toString() + "\n");
+            }
+        }
     }
     
     public List<WeatherData> getDataForCity(List<CityConfig> cities) {
@@ -242,7 +246,7 @@ public class WeatherExtractor {
         return async_service.getWeatherList();
         
         
-        }
+    }
     
     public Set<String> getWeatherFileNames() {
         return weather_file_names;
@@ -253,6 +257,6 @@ public class WeatherExtractor {
     }
         
 
-    }
+}
     
 
