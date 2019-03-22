@@ -30,17 +30,17 @@ public class DBWeatherRepository implements IWeatherRepository{
         return db_weather_list;
     }
     
-    public void DBDelete(List<WeatherData> weather_list)
+    public void DBDeleteList(List<WeatherData> weather_list)
     {
         wlist_dao.deleteWeatherList(weather_list);
     }
     
-    public void DBUpdate(List<WeatherData> weather_list)
+    public void DBUpdateList(List<WeatherData> weather_list)
     {
         wlist_dao.updateWeatherList(weather_list);
     }
     
-    public void DBInsert(List<WeatherData> weather_list)
+    public void DBInsertList(List<WeatherData> weather_list)
     {
         wlist_dao.insertWeatherList(weather_list);
     }

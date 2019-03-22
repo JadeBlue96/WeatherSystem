@@ -15,12 +15,11 @@ public interface IWeatherRepository {
     * @param weather_list      the list of retrieved weather objects from the weather service
     */
     public List<WeatherData> DBSelect();
-    public void DBDelete(List<WeatherData> weather_list);
-    public void DBUpdate(List<WeatherData> weather_list);
-    public void DBInsert(List<WeatherData> weather_list);
+    public void DBDeleteList(List<WeatherData> weather_list);
+    public void DBUpdateList(List<WeatherData> weather_list);
+    public void DBInsertList(List<WeatherData> weather_list);
     
     public void close();
-    public DBConnector getConnector();
 
 
 }

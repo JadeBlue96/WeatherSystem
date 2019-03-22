@@ -31,11 +31,6 @@ public class WeatherListDAO {
     private static final String SQL_INSERT_WEATHER = "INSERT INTO \"Weather\"(temp, feel_temp, status, weather_add_id, weather_config_id, weather_wind_id, query_date) "
             + "VALUES(?,?,?,?,?,?,?)\n";
     
-    private static final String SQL_SELECT_WIND_ALL = "SELECT * from \"Wind\"";
-    private static final String SQL_SELECT_CONFIG_ALL = "SELECT * from \"Config\"";
-    private static final String SQL_SELECT_ADDITIONAL_ALL = "SELECT * from \"Additional\"";
-    private static final String SQL_SELECT_WEATHER_ALL = "SELECT * from \"Weather\"";
-    
     private static final String SQL_UPDATE_WIND = "UPDATE \"Wind\" SET wind_spd = ?, wind_status = ?, wind_direction = ? WHERE wind_id = ? \n";
     private static final String SQL_UPDATE_ADDITIONAL = "UPDATE \"Additional\" SET humidity = ?, visibility = ?, pressure = ? WHERE add_id = ?\n";
     private static final String SQL_UPDATE_CONFIG = "UPDATE \"Config\" SET city = ?, country = ?, site = ? WHERE config_id = ?\n";
@@ -173,30 +168,22 @@ public class WeatherListDAO {
             Long timeStarted = System.currentTimeMillis();
             
             weather_dblist.parallelStream().forEach(weather_db_data -> {
-                Long db_add_id = weather_db_data.getWeather_add_id();
-                Long db_config_id = weather_db_data.getWeather_config_id();
-                Long db_wind_id = weather_db_data.getWeather_wind_id();
+                //Long db_add_id = weather_db_data.getWeather_add_id();
+                //Long db_config_id = weather_db_data.getWeather_config_id();
+                //Long db_wind_id = weather_db_data.getWeather_wind_id();
                 WeatherData weather_obj_data = new WeatherData();
                 add_list.forEach(add -> {
-                    if(add.getId().equals(db_add_id)) {
                         weather_obj_data.setAdditional_data(add);
                         return;
-                    }
                 });
                 conf_list.forEach(config -> {
-                    if(config.getId().equals(db_config_id))
-                    {
                         weather_obj_data.setConfig_data(config);
                         return;
-                    }
                 });
 
                 wind_list.forEach(wind -> {
-                    if(wind.getId().equals(db_wind_id))
-                    {
                         weather_obj_data.setWind_data(wind);
                         return;
-                    }
                 });
 
                 weather_obj_data.setTemp(weather_db_data.getTemp());

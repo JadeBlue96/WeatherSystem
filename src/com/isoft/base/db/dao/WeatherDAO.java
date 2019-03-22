@@ -20,11 +20,6 @@ public class WeatherDAO {
     
     private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
     
-    private static final String SQL_UPDATE_WEATHER = "UPDATE \"Weather\" SET temp = ?, feel_temp = ?, status = ?, "
-            + "weather_add_id = ?, weather_config_id = ?, weather_wind_id = ? WHERE weather_id = ?\n";
-    private static final String SQL_DELETE_WEATHER = "DELETE FROM \"Weather\" WHERE weather_id = ?\n";
-    private static final String SQL_INSERT_WEATHER = "INSERT INTO \"Weather\"(temp, feel_temp, status, weather_add_id, weather_config_id, weather_wind_id, query_date) "
-            + "VALUES(?,?,?,?,?,?,?)\n";
     private static final String SQL_SELECT_WEATHER_ALL = "SELECT * from \"Weather\"";
     
     public WeatherDAO(DBConnector db)
@@ -111,12 +106,9 @@ public class WeatherDAO {
                 int temp = rs.getInt("temp");
                 int feel_temp = rs.getInt("feel_temp");
                 String status = rs.getString("status");
-                long weather_add_id = rs.getLong("weather_add_id");
-                long weather_config_id = rs.getLong("weather_config_id");
-                long weather_wind_id = rs.getLong("weather_wind_id");
                 Timestamp query_date = rs.getTimestamp("query_date");
                 
-                WeatherData db_weather_data = new WeatherData(id, temp, feel_temp, status,weather_add_id, weather_config_id, weather_wind_id, query_date);
+                WeatherData db_weather_data = new WeatherData(id, temp, feel_temp, status, query_date);
                 weather_dblist.add(db_weather_data);
             }
         } 

@@ -1,23 +1,50 @@
 package com.isoft.base.db.model;
 
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
-import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "Weather")
 public class WeatherData {
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "weather_id")
     private long id;
+    
+    @Column(name = "temp")
     private int temp;
+    
+    @Column(name = "feel_temp")
     private int feel_temp;
+    
+    @Column(name = "status", length = 50)
     private String status;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="weather_wind_id")
     private Wind wind_data;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="weather_add_id")
     private Additional additional_data;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="weather_config_id")
     private ConfigData config_data;
+    
+    @Column(name = "query_date")
     private Timestamp query_date;
     
-    private long weather_add_id;
-    private long weather_config_id;
-    private long weather_wind_id;
     
     public WeatherData() {
         temp = 0;
@@ -26,7 +53,6 @@ public class WeatherData {
         wind_data = new Wind();
         additional_data = new Additional();
         setConfig_data(new ConfigData());
-        weather_add_id = weather_config_id = weather_wind_id = (long) 0;
         query_date = null;
     }
     public WeatherData(int temp, int feel_temp, String status, Wind wind_data, 
@@ -39,14 +65,11 @@ public class WeatherData {
         this.query_date = query_date;
     }
     public WeatherData(long id, int temp, int feel_temp, String status,
-            long weather_add_id, long weather_config_id, long weather_wind_id, Timestamp query_date) {
+            Timestamp query_date) {
         this.id = id;
         this.temp = temp;
         this.feel_temp = feel_temp;
         this.status = status;
-        this.weather_add_id = weather_add_id;
-        this.weather_config_id = weather_config_id;
-        this.weather_wind_id = weather_wind_id;
         this.query_date = query_date;
     }
     public Wind getWind_data() {
@@ -61,12 +84,16 @@ public class WeatherData {
     public void setAdditional_data(Additional additional_data) {
         this.additional_data = additional_data;
     }
+    
+    
     public Integer getTemp() {
         return temp;
     }
     public void setTemp(int temp) {
         this.temp = temp;
     }
+    
+    
     public String getStatus() {
         return status;
     }
@@ -78,6 +105,8 @@ public class WeatherData {
         return "WeatherData [temp=" + temp + "°C, feel_temp=" + feel_temp + "°C, status=" + status + ", wind_data=" + wind_data.toString() + ", additional_data="
                 + additional_data.toString() + ", " + config_data.toString() + "]" + " [Date added:" + query_date.toString() + "]";
     }
+    
+   
     public Integer getFeel_temp() {
         return feel_temp;
     }
@@ -94,18 +123,13 @@ public class WeatherData {
     {
         this.id = id;
     }
+    
+    
     public long getId() {
         return id;
     }
-    public long getWeather_config_id() {
-        return weather_config_id;
-    }
-    public long getWeather_add_id() {
-        return weather_add_id;
-    }
-    public long getWeather_wind_id() {
-        return weather_wind_id;
-    }
+    
+   
     public Timestamp getQuery_date() {
         return query_date;
     }
