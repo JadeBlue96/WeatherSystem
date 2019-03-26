@@ -121,7 +121,21 @@ public class WeatherListDAO {
             weather_dblist.forEach(weather_db_data -> {
                 WeatherData weather_obj_data = new WeatherData();
                 add_list.forEach(add -> {
+                        
+                        if(add.getHumidity() == null)
+                        {
+                            add.setHumidity(0);
+                        }
+                        if(add.getPressure() == null)
+                        {
+                            add.setPressure(0);
+                        }
+                        if(add.getVisibility() == null)
+                        {
+                            add.setVisibility(0.0);
+                        }
                         weather_obj_data.setAdditional_data(add);
+                        
                         return;
                 });
                 conf_list.forEach(config -> {
@@ -130,12 +144,30 @@ public class WeatherListDAO {
                 });
 
                 wind_list.forEach(wind -> {
+                        if(wind.getWind_spd() == null)
+                        {
+                            wind.setWind_spd(0.0);
+                        }
                         weather_obj_data.setWind_data(wind);
                         return;
                 });
 
-                weather_obj_data.setTemp(weather_db_data.getTemp());
-                weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
+                    
+                if(weather_db_data.getTemp() == null)
+                {
+                    weather_obj_data.setTemp(0);
+                }
+                else {
+                    weather_obj_data.setTemp(weather_db_data.getTemp());
+                }
+                
+                if(weather_db_data.getFeel_temp() == null)
+                {
+                    weather_obj_data.setFeel_temp(0);
+                }
+                else {
+                    weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
+                }
                 weather_obj_data.setStatus(weather_db_data.getStatus());
                 weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
                 

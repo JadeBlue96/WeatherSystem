@@ -17,7 +17,7 @@ public class Wind {
     private long id;
     
     @Column(name = "wind_spd")
-    private double wind_spd;
+    private Double wind_spd;
     
     @Column(name = "wind_status", length = 20)
     private String wind_status;
@@ -26,7 +26,7 @@ public class Wind {
     private String wind_direction;
     
     public Wind() {
-        wind_spd = 0.0;
+        wind_spd = null;
         wind_status = wind_direction = "";
     }
     public Wind(double wind_spd, String wind_status, String wind_direction) {

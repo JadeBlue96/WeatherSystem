@@ -18,17 +18,17 @@ public class Additional {
     private long id;
     
     @Column(name = "humidity")
-    private int humidity;
+    private Integer humidity;
     
     @Column(name = "visibility")
-    private double visibility;
+    private Double visibility;
     
     @Column(name = "pressure")
-    private int pressure;
+    private Integer pressure;
     
     public Additional() {
-        humidity = pressure = 0;
-        visibility = 0.0;
+        humidity = pressure = null;
+        visibility = null;
         id = (long) 0;
     }
     public Additional(int humidity, double visibility, int pressure) {

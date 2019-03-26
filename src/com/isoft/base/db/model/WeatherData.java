@@ -22,10 +22,10 @@ public class WeatherData {
     private long id;
     
     @Column(name = "temp")
-    private int temp;
+    private Integer temp;
     
     @Column(name = "feel_temp")
-    private int feel_temp;
+    private Integer feel_temp;
     
     @Column(name = "status", length = 50)
     private String status;
@@ -47,8 +47,8 @@ public class WeatherData {
     
     
     public WeatherData() {
-        temp = 0;
-        feel_temp = 0;
+        temp = null;
+        feel_temp = null;
         status = "";
         wind_data = new Wind();
         additional_data = new Additional();
