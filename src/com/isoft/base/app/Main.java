@@ -9,9 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import com.isoft.base.db.DBWeatherRepository;
 import com.isoft.base.db.HBWeatherRepository;
-import com.isoft.base.db.hb_dao.WeatherListDAO;
 import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.logging.PropLogger;
 import com.isoft.base.property.CityConfig;
