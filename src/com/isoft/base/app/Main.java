@@ -1,8 +1,13 @@
 package com.isoft.base.app;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.logging.Logger;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import com.isoft.base.db.DBWeatherRepository;
 import com.isoft.base.db.HBWeatherRepository;
@@ -13,12 +18,16 @@ import com.isoft.base.property.CityConfig;
 import com.isoft.base.validation.Validator;
 import com.isoft.base.weather.WeatherExtractor;
 
+
+@SpringBootApplication
 public class Main {
     
     private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
     
     public static void main(String[] args)
     {
+        ApplicationContext ctx = SpringApplication.run(Main.class, args);
+        
         
         List<CityConfig> cities = new ArrayList<CityConfig>();
         boolean isXMLValidationType = false;
@@ -30,11 +39,11 @@ public class Main {
         
         HBWeatherRepository hbw_repos = new HBWeatherRepository();
         hbw_repos.DBInsertList(weather_list);
-        weather_list.get(0).setFeel_temp(666);
+        //weather_list.get(0).setFeel_temp(666);
         //hbw_repos.DBUpdateList(weather_list);
-        List<WeatherData> db_weather_list = hbw_repos.DBSelect();
+        //List<WeatherData> db_weather_list = hbw_repos.DBSelect();
         //hbw_repos.DBDeleteList(weather_list);
-        WeatherExtractor.printWeatherList(db_weather_list);
+        //WeatherExtractor.printWeatherList(db_weather_list);
         hbw_repos.close();
             
     }
