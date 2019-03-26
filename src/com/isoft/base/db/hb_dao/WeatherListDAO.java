@@ -20,9 +20,8 @@ public class WeatherListDAO {
 
         if (weather_list != null)
         {
-            Long timeStarted = System.currentTimeMillis();
             
-            weather_list.parallelStream().forEach(weather_data -> {
+            weather_list.forEach(weather_data -> {
                 
                 long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
                 
@@ -42,8 +41,6 @@ public class WeatherListDAO {
                 add_dao.deleteAdditional(add_id);
                 
             });
-        
-            System.out.println("Parallel stream db delete time: " + (System.currentTimeMillis() - timeStarted) + "ms");
             
         logger.info(this.getClass().getName().toString() + ": Successfully deleted + " + weather_list.size() + " rows.");
         }
@@ -55,9 +52,8 @@ public class WeatherListDAO {
         
         if(weather_list != null)
         {
-            Long timeStarted = System.currentTimeMillis();
             
-            weather_list.parallelStream().forEach(weather_data -> {
+            weather_list.forEach(weather_data -> {
                 long wind_id = 0, config_id = 0, weather_id = 0, add_id = 0;
                 
                 wind_id = weather_data.getWind_data().getId();
@@ -76,8 +72,6 @@ public class WeatherListDAO {
                 weather_dao.updateWeather(weather_data, weather_id);
             });
             
-            System.out.println("Parallel stream db update time: " + (System.currentTimeMillis() - timeStarted) + "ms");
-            
             logger.info(this.getClass().getName().toString() + ": Successfully updated + " + weather_list.size() + " rows.");
         }
     }
@@ -86,14 +80,13 @@ public class WeatherListDAO {
         
         if (weather_list != null)
         {
-            Long timeStarted = System.currentTimeMillis();
             
             WeatherDAO weather_dao = new WeatherDAO();
             WindDAO wind_dao = new WindDAO();
             ConfigDAO config_dao = new ConfigDAO();
             AdditionalDAO add_dao = new AdditionalDAO();
             
-            weather_list.parallelStream().forEach(weather_data -> {
+            weather_list.forEach(weather_data -> {
 
                 wind_dao.insertWind(weather_data);
                 config_dao.insertConfig(weather_data);
@@ -102,9 +95,7 @@ public class WeatherListDAO {
                 
             });
             
-            System.out.println("Parallel stream db insert time: " + (System.currentTimeMillis() - timeStarted) + "ms");
-            
-            logger.info(this.getClass().getName().toString() + ": Successfully updated + " + weather_list.size() + " rows.");
+            logger.info(this.getClass().getName().toString() + ": Successfully inserted + " + weather_list.size() + " rows.");
         }
 
     }
@@ -126,9 +117,8 @@ public class WeatherListDAO {
         
         if(weather_dblist != null)
         {
-            Long timeStarted = System.currentTimeMillis();
             
-            weather_dblist.parallelStream().forEach(weather_db_data -> {
+            weather_dblist.forEach(weather_db_data -> {
                 WeatherData weather_obj_data = new WeatherData();
                 add_list.forEach(add -> {
                         weather_obj_data.setAdditional_data(add);
@@ -152,7 +142,6 @@ public class WeatherListDAO {
                 weather_objlist.add(weather_obj_data);
             });
             
-            System.out.println("Parallel stream db select time: " + (System.currentTimeMillis() - timeStarted) + "ms");
             logger.info(this.getClass().getName().toString() + ": Successfully selected + " + weather_objlist.size() + " rows.");
             return weather_objlist;
         }

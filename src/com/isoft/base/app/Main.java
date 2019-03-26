@@ -30,11 +30,11 @@ public class Main {
         
         HBWeatherRepository hbw_repos = new HBWeatherRepository();
         hbw_repos.DBInsertList(weather_list);
-        //weather_list.get(0).setFeel_temp(666);
+        weather_list.get(0).setFeel_temp(666);
         //hbw_repos.DBUpdateList(weather_list);
-       // List<WeatherData> db_weather_list = hbw_repos.DBSelect();
-        hbw_repos.DBDeleteList(weather_list);
-        //WeatherExtractor.printWeatherList(db_weather_list);
+        List<WeatherData> db_weather_list = hbw_repos.DBSelect();
+        //hbw_repos.DBDeleteList(weather_list);
+        WeatherExtractor.printWeatherList(db_weather_list);
         hbw_repos.close();
             
     }
