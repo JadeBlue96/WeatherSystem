@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.stereotype.Repository;
+
 import com.isoft.base.db.model.Additional;
 import com.isoft.base.db.model.ConfigData;
 import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.db.model.Wind;
 import com.isoft.base.logging.PropLogger;
 
+
+@Repository
 public class WeatherListDAO {
     
     private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
@@ -169,7 +173,7 @@ public class WeatherListDAO {
                     weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
                 }
                 weather_obj_data.setStatus(weather_db_data.getStatus());
-                weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
+                weather_obj_data.setQuery_date();
                 
                 weather_objlist.add(weather_obj_data);
             });

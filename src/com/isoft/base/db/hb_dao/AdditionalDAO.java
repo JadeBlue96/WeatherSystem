@@ -8,11 +8,13 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import com.isoft.base.db.HBConnector;
 import com.isoft.base.db.model.Additional;
 import com.isoft.base.db.model.WeatherData;
 
+@Repository
 public class AdditionalDAO {
     
     private final static Logger logger = Logger.getLogger(AdditionalDAO.class.getName());

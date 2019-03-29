@@ -1,10 +1,12 @@
 package com.isoft.base.db.model;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,9 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 @Entity
 @Table(name = "Weather")
+@EntityListeners(AuditingEntityListener.class)
 public class WeatherData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -30,16 +35,16 @@ public class WeatherData {
     @Column(name = "status", length = 50)
     private String status;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="weather_wind_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "weather_wind_id", unique = true)
     private Wind wind_data;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="weather_add_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "weather_add_id", unique = true)
     private Additional additional_data;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="weather_config_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name ="weather_config_id", unique = true)
     private ConfigData config_data;
     
     @Column(name = "query_date")
@@ -102,7 +107,7 @@ public class WeatherData {
     }
     @Override
     public String toString() {
-        return "WeatherData [temp=" + temp + "°C, feel_temp=" + feel_temp + "°C, status=" + status + ", wind_data=" + wind_data.toString() + ", additional_data="
+        return "WeatherData [temp=" + temp + "ï¿½C, feel_temp=" + feel_temp + "ï¿½C, status=" + status + ", wind_data=" + wind_data.toString() + ", additional_data="
                 + additional_data.toString() + ", " + config_data.toString() + "]" + " [Date added:" + query_date.toString() + "]";
     }
     
@@ -133,8 +138,8 @@ public class WeatherData {
     public Timestamp getQuery_date() {
         return query_date;
     }
-    public void setQuery_date(Timestamp query_date) {
-        this.query_date = query_date;
+    public void setQuery_date() {
+        this.query_date = Timestamp.from(Instant.now());
     }
     
     

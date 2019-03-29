@@ -8,12 +8,15 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import com.isoft.base.db.DBConnector;
 import com.isoft.base.db.HBConnector;
 import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.logging.PropLogger;
 
+
+@Repository
 public class WeatherDAO {
     DBConnector db = null;
     
@@ -56,7 +59,7 @@ public class WeatherDAO {
             if (weather != null) {
                     weather.setTemp(weather_data.getTemp());
                     weather.setStatus(weather_data.getStatus());
-                    weather.setQuery_date(weather_data.getQuery_date());
+                    weather.setQuery_date();
                     weather.setFeel_temp(weather_data.getFeel_temp());
                     weather.setAdditional_data(weather_data.getAdditional_data());
                     weather.setConfig_data(weather_data.getConfig_data());

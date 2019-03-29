@@ -8,12 +8,15 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import com.isoft.base.db.HBConnector;
 import com.isoft.base.db.model.Wind;
 import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.db.model.Wind;
 
+
+@Repository
 public class WindDAO {
 private final static Logger logger = Logger.getLogger(AdditionalDAO.class.getName());
     

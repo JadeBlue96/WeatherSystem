@@ -189,7 +189,7 @@ public class WeatherListDAO {
                 weather_obj_data.setTemp(weather_db_data.getTemp());
                 weather_obj_data.setFeel_temp(weather_db_data.getFeel_temp());
                 weather_obj_data.setStatus(weather_db_data.getStatus());
-                weather_obj_data.setQuery_date(weather_db_data.getQuery_date());
+                weather_obj_data.setQuery_date();
                 
                 weather_objlist.add(weather_obj_data);
             });

@@ -84,7 +84,7 @@ public class WeatherDeserializer {
             if(add_data != null)    weather_data.setAdditional_data(add_data);
             if(wind_data != null)    weather_data.setWind_data(wind_data);
             if(config_data != null) weather_data.setConfig_data(config_data);
-            if(weather_data != null) weather_data.setQuery_date(Timestamp.from(Instant.now()));
+            if(weather_data != null) weather_data.setQuery_date();
             return weather_data;
         } catch (FileNotFoundException e) {
             logger.log(Level.SEVERE, this.getClass().getName().toString() + "Values file not found.");
