@@ -27,9 +27,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.logging.PropLogger;
 import com.isoft.base.property.CityConfig;
+import com.isoft.rest.db.model.WeatherData;
 
 public class WeatherExtractor {
     

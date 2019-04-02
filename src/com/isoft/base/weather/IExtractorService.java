@@ -2,8 +2,8 @@ package com.isoft.base.weather;
 
 import java.util.List;
 
-import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.property.CityConfig;
+import com.isoft.rest.db.model.WeatherData;
 
 /*
  *    Creates a fixed-length thread pool to run http requests asynchronously. 

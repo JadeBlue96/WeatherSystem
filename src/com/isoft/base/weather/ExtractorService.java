@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.isoft.base.db.model.WeatherData;
 import com.isoft.base.logging.PropLogger;
 import com.isoft.base.property.CityConfig;
+import com.isoft.rest.db.model.WeatherData;
 
 public class ExtractorService {
     
