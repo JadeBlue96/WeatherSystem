@@ -36,6 +36,11 @@ public class WeatherController {
         return weather_repos.findAll(pageable);
     }
     
+    @GetMapping("/weather_list")
+    public List<WeatherData> getWeatherData() {
+        return weather_repos.findAll();
+    }
+    
     @GetMapping("/weather/{weatherId}")
     public Optional<WeatherData> getWeatherData(@PathVariable Long weatherId) {
         return weather_repos.findById(weatherId);

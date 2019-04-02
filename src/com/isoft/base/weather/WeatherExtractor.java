@@ -226,7 +226,7 @@ public class WeatherExtractor {
         {
             for(WeatherData weather_data: weather_list)
             {
-                if(weather_data != null)    System.out.println(weather_data.toString() + "\n");
+                if(weather_data != null && weather_data.getQuery_date() != null)    System.out.println(weather_data.toString() + "\n");
             }
         }
     }

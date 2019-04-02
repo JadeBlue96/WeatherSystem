@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,9 @@ public class WeatherUtil implements CommandLineRunner{
         cities = Validator.getValidCitiesByType(isXMLValidationType);
         WeatherExtractor weather_extractor = new WeatherExtractor();
         List<WeatherData> weather_list = weather_extractor.getDataForCity(cities);
-        w_ctr.insertWeatherList(weather_list);
-        
+        //w_ctr.insertWeatherList(weather_list);
+        weather_list = w_ctr.getWeatherData();
+        WeatherExtractor.printWeatherList(weather_list);
         logger.log(Level.INFO, "Saved queried data to database.");
     }
 
