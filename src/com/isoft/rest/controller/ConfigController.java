@@ -1,5 +1,6 @@
 package com.isoft.rest.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -34,6 +35,11 @@ public class ConfigController {
     @GetMapping("/config/{configId}")
     public Optional<ConfigData> getConfigData(@PathVariable Long configId) {
         return config_repos.findById(configId);
+    }
+    
+    @GetMapping("/config/{configSite}")
+    public List<ConfigData> getConfigDataSite(@PathVariable String configSite) {
+        return config_repos.findConfigBySite(configSite);
     }
     
     @PostMapping("/config")

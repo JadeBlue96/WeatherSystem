@@ -8,4 +8,5 @@ import com.isoft.rest.db.model.ConfigData;
 
 public interface ConfigRepository extends JpaRepository<ConfigData, Long>{
     List<ConfigData> findConfigById(Long configId);
+    List<ConfigData> findConfigBySite(String site);
 }

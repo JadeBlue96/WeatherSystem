@@ -34,8 +34,8 @@ public class WeatherUtil implements CommandLineRunner{
         cities = Validator.getValidCitiesByType(isXMLValidationType);
         WeatherExtractor weather_extractor = new WeatherExtractor();
         List<WeatherData> weather_list = weather_extractor.getDataForCity(cities);
-        //w_ctr.insertWeatherList(weather_list);
-        weather_list = w_ctr.getWeatherData();
+        w_ctr.insertWeatherList(weather_list);
+        //weather_list = w_ctr.getWeatherData();
         WeatherExtractor.printWeatherList(weather_list);
         logger.log(Level.INFO, "Saved queried data to database.");
     }

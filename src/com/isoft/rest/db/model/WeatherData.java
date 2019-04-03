@@ -2,6 +2,9 @@ package com.isoft.rest.db.model;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,6 +53,15 @@ public class WeatherData {
     @Column(name = "query_date")
     private Timestamp query_date;
     
+    @Column(name = "day")
+    private Integer day;
+    
+    @Column(name = "month")
+    private String month;
+    
+    @Column(name = "year")
+    private Integer year;
+    
     
     public WeatherData() {
         temp = null;
@@ -59,6 +71,9 @@ public class WeatherData {
         additional_data = new Additional();
         setConfig_data(new ConfigData());
         query_date = null;
+        day = null;
+        year = null;
+        month = "";
     }
     public WeatherData(int temp, int feel_temp, String status, Wind wind_data, 
             Additional additional_data, ConfigData config_data, Timestamp query_date) {
@@ -68,6 +83,9 @@ public class WeatherData {
         this.additional_data = additional_data;
         this.setConfig_data(config_data);
         this.query_date = query_date;
+        this.day = this.query_date.getDay();
+        this.month = Month.of(this.query_date.getMonth()).name();
+        this.year = this.query_date.getYear();
     }
     public WeatherData(long id, int temp, int feel_temp, String status,
             Timestamp query_date) {
@@ -76,6 +94,9 @@ public class WeatherData {
         this.feel_temp = feel_temp;
         this.status = status;
         this.query_date = query_date;
+        this.day = this.query_date.getDay();
+        this.month = Month.of(this.query_date.getMonth()).name();
+        this.year = this.query_date.getYear();
     }
     public Wind getWind_data() {
         return wind_data;
@@ -138,8 +159,36 @@ public class WeatherData {
     public Timestamp getQuery_date() {
         return query_date;
     }
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+    public void setMonth(String month) {
+        this.month = month;
+    }
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+    public Integer getDay() {
+        return day;
+    }
+    public String getMonth() {
+        return month;
+    }
+    public Integer getYear() {
+        return year;
+    }
+    
     public void setQuery_date() {
         this.query_date = Timestamp.from(Instant.now());
+        LocalDate currentDate = LocalDate.now();
+        
+        int dom = currentDate.getDayOfMonth();
+        Month m = currentDate.getMonth();
+        int y = currentDate.getYear();
+
+        setDay(dom);
+        setMonth(m.name());
+        setYear(y);
     }
     
     

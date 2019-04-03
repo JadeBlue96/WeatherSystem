@@ -46,6 +46,21 @@ public class WeatherController {
         return weather_repos.findById(weatherId);
     }
     
+    @GetMapping("/weather/{weatherYear}")
+    public List<WeatherData> getWeatherDataYear(@PathVariable Integer weatherYear) {
+        return weather_repos.findWeatherByYear(weatherYear);
+    }
+    
+    @GetMapping("/weather/{weatherYear}/{weatherMonth}")
+    public List<WeatherData> getWeatherDataMonthYear(@PathVariable Integer weatherYear, @PathVariable String weatherMonth) {
+        return weather_repos.findWeatherByMonthAndYear(weatherMonth, weatherYear);
+    }
+    
+    @GetMapping("/weather/{weatherYear}/{weatherMonth}/{weatherDay}")
+    public List<WeatherData> getWeatherDataMonthYear(@PathVariable Integer weatherYear, @PathVariable String weatherMonth, @PathVariable Integer weatherDay) {
+        return weather_repos.findWeatherByDayAndMonthAndYear(weatherDay, weatherMonth, weatherYear);
+    }
+    
     @PostMapping("/weather")
     public WeatherData insertWeather(@Valid @RequestBody WeatherData weather) {
         return weather_repos.save(weather);
