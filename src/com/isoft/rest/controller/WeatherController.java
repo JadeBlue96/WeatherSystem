@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isoft.rest.db.model.WeatherData;
@@ -26,6 +27,7 @@ import com.isoft.rest.exception.ResourceNotFoundException;
 
 
 @RestController
+@RequestMapping("/api")
 public class WeatherController {
     
     @Autowired(required = true)
@@ -41,23 +43,35 @@ public class WeatherController {
         return weather_repos.findAll();
     }
     
-    @GetMapping("/weather/{weatherId}")
+    @GetMapping("/weather/id/{weatherId}")
     public Optional<WeatherData> getWeatherData(@PathVariable Long weatherId) {
         return weather_repos.findById(weatherId);
     }
     
-    @GetMapping("/weather/{weatherYear}")
+    @GetMapping("/weather/year/{weatherYear}")
     public List<WeatherData> getWeatherDataYear(@PathVariable Integer weatherYear) {
         return weather_repos.findWeatherByYear(weatherYear);
     }
     
-    @GetMapping("/weather/{weatherYear}/{weatherMonth}")
+    @GetMapping("/weather/ym/{weatherYear}/{weatherMonth}")
     public List<WeatherData> getWeatherDataMonthYear(@PathVariable Integer weatherYear, @PathVariable String weatherMonth) {
+        if(weatherMonth.equals("all"))
+        {
+            return weather_repos.findWeatherByYear(weatherYear);
+        }
         return weather_repos.findWeatherByMonthAndYear(weatherMonth, weatherYear);
     }
     
-    @GetMapping("/weather/{weatherYear}/{weatherMonth}/{weatherDay}")
+    @GetMapping("/weather/ymd/{weatherYear}/{weatherMonth}/{weatherDay}")
     public List<WeatherData> getWeatherDataMonthYear(@PathVariable Integer weatherYear, @PathVariable String weatherMonth, @PathVariable Integer weatherDay) {
+        if(weatherDay == 0)
+        {
+            return weather_repos.findWeatherByMonthAndYear(weatherMonth, weatherYear);
+        }
+        if(weatherMonth.equals("all"))
+        {
+            return weather_repos.findWeatherByYear(weatherYear);
+        }
         return weather_repos.findWeatherByDayAndMonthAndYear(weatherDay, weatherMonth, weatherYear);
     }
     

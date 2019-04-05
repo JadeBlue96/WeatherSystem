@@ -32,12 +32,12 @@ public class ConfigController {
         return config_repos.findAll(pageable);
     }
     
-    @GetMapping("/config/{configId}")
+    @GetMapping("/config/id/{configId}")
     public Optional<ConfigData> getConfigData(@PathVariable Long configId) {
         return config_repos.findById(configId);
     }
     
-    @GetMapping("/config/{configSite}")
+    @GetMapping("/config/site/{configSite}")
     public List<ConfigData> getConfigDataSite(@PathVariable String configSite) {
         return config_repos.findConfigBySite(configSite);
     }
