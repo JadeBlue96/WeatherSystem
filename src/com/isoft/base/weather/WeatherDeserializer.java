@@ -9,11 +9,11 @@ import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.isoft.base.db.model.Additional;
-import com.isoft.base.db.model.ConfigData;
-import com.isoft.base.db.model.WeatherData;
-import com.isoft.base.db.model.Wind;
 import com.isoft.base.logging.PropLogger;
+import com.isoft.rest.db.model.Additional;
+import com.isoft.rest.db.model.ConfigData;
+import com.isoft.rest.db.model.WeatherData;
+import com.isoft.rest.db.model.Wind;
 
 public class WeatherDeserializer {
     
@@ -84,7 +84,10 @@ public class WeatherDeserializer {
             if(add_data != null)    weather_data.setAdditional_data(add_data);
             if(wind_data != null)    weather_data.setWind_data(wind_data);
             if(config_data != null) weather_data.setConfig_data(config_data);
-            if(weather_data != null) weather_data.setQuery_date(Timestamp.from(Instant.now()));
+            if(weather_data != null) weather_data.setQuery_date();
+            weather_data.getDay();
+            weather_data.getMonth();
+            weather_data.getYear();
             return weather_data;
         } catch (FileNotFoundException e) {
             logger.log(Level.SEVERE, this.getClass().getName().toString() + "Values file not found.");

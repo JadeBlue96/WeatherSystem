@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">juventus96</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost/weather</property>
+        <property name="hibernate.connection.pool_size">10</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> <!-- DB Dialect -->
+        <property name="hbm2ddl.auto">update</property> <!-- create / create-drop / update -->
+        <property name="show_sql">false</property> <!-- Show SQL in console -->
+        <property name="format_sql">false</property> <!-- Show SQL formatted -->
+
+       <mapping class = "com.isoft.base.db.model.Additional"/>
+       <mapping class = "com.isoft.base.db.model.ConfigData"/>
+       <mapping class = "com.isoft.base.db.model.WeatherData"/>
+       <mapping class = "com.isoft.base.db.model.Wind"/>
+
+    </session-factory>
+</hibernate-configuration>

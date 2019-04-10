@@ -1,0 +1,29 @@
+spring:
+  profiles:
+   active: spring.profiles.active
+  datasource:
+    url: jdbc:postgresql://localhost/weather
+    username: postgres
+    password: juventus96
+  jpa:
+    properties:
+        hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            jdbc: 
+                lob: 
+                    non_contextual_creation: true
+            temp: 
+                use_jdbc_metadata_defaults: false
+    hibernate:
+        ddl-auto: update     
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oafvm470oOUSN0Q7356
+            client-secret: QkZGiJ-op2eI3WzmLCsQ1oe6HxMPUXyiRfo78Xxi
+            scope: openid, email, profile
+        provider:
+          okta:
+            issuer-uri: https://dev-217794.okta.com/oauth2/default
