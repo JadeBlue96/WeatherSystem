@@ -50,11 +50,7 @@ public class WeatherData {
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name ="weather_config_id", unique = true)
     private ConfigData config_data;
-    
-    @ManyToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name = "user_id", unique = true)
-    private WeatherUser user;
-    
+
     @Column(name = "query_date")
     private Timestamp query_date;
     
@@ -194,12 +190,6 @@ public class WeatherData {
         setDay(dom);
         setMonth(m.name());
         setYear(y);
-    }
-    public WeatherUser getUser() {
-        return user;
-    }
-    public void setUser(WeatherUser user) {
-        this.user = user;
     }
     
     

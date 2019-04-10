@@ -1,8 +1,11 @@
 package com.isoft.rest.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
@@ -23,13 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isoft.base.logging.PropLogger;
-import com.isoft.rest.db.model.WeatherUser;
 import com.isoft.rest.db.model.WeatherData;
-import com.isoft.rest.db.repository.AdditionalRepository;
-import com.isoft.rest.db.repository.ConfigRepository;
-import com.isoft.rest.db.repository.UserRepository;
 import com.isoft.rest.db.repository.WeatherRepository;
-import com.isoft.rest.db.repository.WindRepository;
 import com.isoft.rest.exception.ResourceNotFoundException;
 
 
@@ -39,33 +37,19 @@ public class WeatherController {
     
     @Autowired(required = true)
     private WeatherRepository weather_repos;
-    
-    @Autowired(required = true)
-    private UserRepository user_repos;
+   
     
     private final static Logger logger = Logger.getLogger(PropLogger.class.getName());
     
-    /*
-    @GetMapping("/weather")
-    public Page<WeatherData> getWeatherData(Pageable pageable) {
-        return weather_repos.findAll(pageable);
-    }
-    */
     
     @GetMapping("/weather")
     public Page<WeatherData> getWeatherData(Pageable pageable) {
         return weather_repos.findAll(pageable);
     }
     
-    /*
     @GetMapping("/weather_list")
     public List<WeatherData> getWeatherData() {
         return weather_repos.findAll();
-    }
-    */
-    @GetMapping("/weather_list")
-    public List<WeatherData> getWeatherData(@AuthenticationPrincipal OAuth2User principal) {
-        return weather_repos.findAllByUserId(principal.getName());
     }
     
     @GetMapping("/weather/id/{weatherId}")
@@ -100,10 +84,12 @@ public class WeatherController {
         return weather_repos.findWeatherByDayAndMonthAndYear(weatherDay, weatherMonth, weatherYear);
     }
     
+    
     @PostMapping("/weather")
     public WeatherData insertWeather(@Valid @RequestBody WeatherData weather) {
         return weather_repos.save(weather);
     }
+    
     
     @PostMapping("/weather_test")
     public ResponseEntity<List<WeatherData>> insertWeatherList(List<WeatherData> w_list) {

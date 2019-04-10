@@ -1,4 +1,6 @@
 spring:
+  profiles:
+   active: spring.profiles.active
   datasource:
     url: jdbc:postgresql://localhost/weather
     username: postgres
