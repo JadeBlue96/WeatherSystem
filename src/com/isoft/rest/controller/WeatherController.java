@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ import com.isoft.rest.db.model.WeatherData;
 import com.isoft.rest.db.repository.WeatherRepository;
 import com.isoft.rest.exception.ResourceNotFoundException;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class WeatherController {
@@ -64,7 +65,7 @@ public class WeatherController {
     
     @GetMapping("/weather/ym/{weatherYear}/{weatherMonth}")
     public List<WeatherData> getWeatherDataMonthYear(@PathVariable Integer weatherYear, @PathVariable String weatherMonth) {
-        if(weatherMonth.equals("all"))
+        if(weatherMonth.equals("All"))
         {
             return weather_repos.findWeatherByYear(weatherYear);
         }
