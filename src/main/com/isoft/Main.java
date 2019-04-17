@@ -45,7 +45,7 @@ public class Main {
         
         return (String[] args) -> {
         
-        
+        /*
         List<CityConfig> cities = new ArrayList<CityConfig>();
         boolean isXMLValidationType = false;
         cities = Validator.getValidCitiesByType(isXMLValidationType);
@@ -55,7 +55,7 @@ public class Main {
         //weather_list = w_ctr.getWeatherData();
         WeatherExtractor.printWeatherList(weather_list);
         logger.log(Level.INFO, "Saved queried data to database.");
-        
+        */
         };
     }
     
