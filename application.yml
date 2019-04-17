@@ -3,8 +3,8 @@ spring:
    active: spring.profiles.active
   datasource:
     url: jdbc:postgresql://localhost/weather
-    username: postgres
-    password: juventus96
+    username: {{postgres.username}}
+    password: {{postgres.password}}
     driver-class-name: org.postgresql.Driver
     embedded-directory: target
   jpa:
