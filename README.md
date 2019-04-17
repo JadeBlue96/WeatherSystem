@@ -3,7 +3,7 @@ ISoftBG test project as part of an internship program.
 
 A RESTful spring boot app that communicates with a simple React UI for yearly and monthly weather checking and stores the weather data extracted from various website in a PostgreSQL database. It uses [Okta](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)'s OAuth2 API to authenticate the user.
 
-![App image](app.png)
+<img src="app.PNG" style="max-height: 200px" alt="App image" />
 
 ## Requirements
 - Java JDK 1.8 / Java 8 or higher.
